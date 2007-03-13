@@ -1,0 +1,53 @@
+******** BlastAlign *********
+
+Written by Robert Belshaw & Aris Katzourakis, Department of Zoology, University of Oxford, South Parks Road, Oxford OX1 3PS, UK.
+For more information and to cite see Belshaw, R & Katzourakis, A (2005) BlastAlign: a program that uses blast to align problematic nucleotide sequences. Bioinformatics 21:122-123.
+
+Please send any comments to robert.belshaw@zoo.ox.ac.uk and/or aris.katzourakis@zoo.ox.ac.uk
+
+BlastAlign is a perl script that uses NCBI blastn to align nucleotide sequences that are in FASTA format (">"name, line-break, sequence (may have gaps & internal line-breaks), line-break, ">"name, line-break etc)
+
+This is version 1.2. (Change from 1.1 is to make it able to work also with NCBI BLASTN version 2.2.14 - thanks to Toby Hunt for spotting this)
+There is a web-interface to BlastAlign at http://www.bioafrica.net/blast/BlastAlign.html 
+
+
+1. Extract from tar archive with following command.
+
+tar -xvf BlastAlign.tar
+
+Contents:
+BlastAlign is the main perl script.
+BlastAlign.py is a python script that is called by BlastAlign.
+BlastAlignP is an independent Perl script that uses NCBI tblastn to align nucleotide sequences to a single amino acid sequence (it does not require BlastAlign.py and uses NCBI tblastn rather than blastn).
+
+2. Ensure that the following scripts are either in the shell's PATH or edit lines 13-15 of the BlastAlign script to give their locations.
+
+NCBI blastall (obtain with formatdb from http://www.ncbi.nlm.nih.gov/BLAST/).
+NCBI formatdb (as above).
+BlastAlign.py - part of the BlastAlign tar archive.
+
+[Also, the maximum estimated size of the blastn output file (beyond which BlastAlign randomly samples the input file;default 1Gb) and the e value for blastn can be edited at lines 19 and 20.]
+
+3. Either (a) edit the first line of BlastAlign to give the correct location and version of Perl on the computer's system and then type "BlastAlign", or (b) type "perl BlastAlign".
+BlastAlign is run only from the command line and you will then see a list of commands (also listed below). A typical command line will be >BlastAlign -i file_name -m 0.7 -s 100 -n F -x seq75,seq66
+
+-i <name of input file> (obligatory);
+-m <maximum proportion of gaps allowed in any one sequence in the final alignment> Optional but we find 0.5 the most useful; default = 0.95, i.e. only removing sequences with extremely short matches\n";
+-r <name of reference sequence> Optional; default is to search for best candidate (if entered, the sequence will be extracted, written to a separate file, and blasted against the original input file)\n";
+-x <names of comma-separated sequences to be excluded from this analysis> Optional\n";
+-n <T/F> Retain original names in output files T(rue)/F(alse). Optional (default = T;) option F is to output the 15 character name abbreviations (stripped of potentially problematic characters) that is used in the program\n"; 
+-s <Number of sequences to be used in initial search for reference sequence> Optional; default is to find the reference sequence by blasting all sequences against all sequences, only randomly subsampling when it thinks the blast output file might be too large (-s over-rides this)\n";
+
+Note, BlastAlign produces the following three files:
+blast_out_raw is the output from blastn that is parsed by BlastAlign.
+blast_out_python shows a matrix of homologous "landmarks" among the sequences (see accompanying manuscript for further explanation).
+blast_out is a file used only to communicate between BlastAlign and BlastAlign.py
+
+BlastAlignP is run similarly to BlastAlign. Its commands are as follows:
+-i <name of input file with single aa sequence> (obligatory);
+-l <name of input file with nucleotide sequences> (obligatory);
+-s <T/F> Leave in stop codons T(rue)/F(alse). Optional; default = T; option F is to replace with gaps\n";
+-m <max proportion of gaps allowed in any one sequence in the final alignment> Optional; default = 0.95\n";
+-n <T/F> Retain original names in output file. T(rue)/F(alse). Optional; default = T; option F is to output the 15 character abbreviations stripped of potentially problematic symbols which is used in the program\n"; 
+
+********* End **************

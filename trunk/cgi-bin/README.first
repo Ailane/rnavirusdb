@@ -1,0 +1,34 @@
+The virus database web site uses external programs that are called
+using CGIs. This directory is for storing information on whatever has
+to be installed on the web server outside of the web site document
+root. Place here either source code or links to obtaining the source
+code of the external programs.
+
+This file can also act as a manifest of what is required to be
+installed.
+
+TreeGraph (tgf) tgf10rc4.zip
+http://www.math.uni-bonn.de/people/jmueller/extra/treegraph/
+
+Phylips http://evolution.gs.washington.edu/phylip/
+
+clustalw
+ http://www.ebi.ac.uk/clustalw/
+ http://www.embl-heidelberg.de/~chenna/clustal/darwin/
+
+BLAST http://www.ncbi.nlm.nih.gov/BLAST/
+
+BlastAlign http://evolve.zoo.ox.ac.uk/software.html?id=blastalign
+  BlastAlign.cgi, not included with that download, can be found here
+
+fasta_files directory included here to be installed under the
+directory that contains the BLAST binaries
+(should these be generated from the database?)
+
+ps2pdf a script bundled with Ghostscript
+
+readseq
+   http://sourceforge.net/projects/readseq
+   http://bioinformatics.ubc.ca/resources/tools/readSeq
+   http://iubio.bio.indiana.edu/soft/molbio/readseq/
+
