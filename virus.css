@@ -1,0 +1,135 @@
+BODY {
+	color: #4C5681;
+	background-color: #FFFFFF;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-left: 20px;
+	margin-bottom: 0px;
+	font-family: 'Verdana, Arial, Helvetica, sans-serif';
+	font-size: 11pt;
+}
+
+H1 { 
+	font-weight: normal;
+	font-size: 16px;
+/*	padding-left: 1em; */
+	color: rgb(0, 0, 102);
+}
+
+H2 { 
+	font-weight: normal;
+	font-size: 20px;
+	color: rgb(0, 0, 102);
+}
+
+TABLE.toolbar {
+	font-size: 14px;
+	border-width: 0px 1px 1px 1px;
+	border-spacing: 0px;
+	border-style: outset;
+	border-collapse: collapse;
+	background-color: #000099;
+	color: #FFFFFF;
+}
+
+TABLE.toolbar TD {
+	vertical-align: middle; 
+	text-align: center; 
+	margin: 0px;
+	border-spacing: 0px;
+	padding: 2px; 
+}
+TABLE.toolbar A:link { color: #FFFFFF; text-decoration: none; }
+TABLE.toolbar A:visited { color: #FFFFFF; text-decoration: none; }
+TABLE.toolbar A:active { color: #FFFFFF; text-decoration: none; }
+TABLE.toolbar A:hover { color: #000099; background-color: #FFFFFF; }
+FORM {
+	margin: 0px;
+}
+
+TABLE.data {
+	padding-left: 4em;
+	font-size: 14px;
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 0px;
+	border-style: outset;
+	border-color: gray;
+	border-collapse: collapse;
+	background-color: rgb(255, 255, 240);
+}
+
+TR.heading, TD.heading {
+	font-size: 14px;
+	background-color: #CCCCCC;
+}
+
+TABLE.genome {
+	color: black;
+	border-width: 0px;
+	border-spacing: 0px;
+	border-style: outset;
+	border-color: gray;
+	border-collapse: collapse;
+	margin-top: 2pt;
+}
+
+TABLE.genome TD {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	border-color: black;
+}
+
+TABLE.genome TR.scale, TD.scale {
+	font-size: 10pt;
+	height: 12pt;
+}
+
+TABLE.genome TR.segment {
+	font-size: 10pt;
+}
+
+TABLE.genome TD.segment {
+	background-color: #FF9900;
+}
+
+TABLE.genome TR.gene {
+	font-size: 10pt;
+}
+
+TABLE.genome TD.gene {
+	background-color: #99CCFF;
+}
+
+TABLE.overview {
+	width: 720px;	
+	margin: 0px;
+}
+
+TABLE.overview TD {
+	vertical-align: top;
+}
+
+TABLE.overview TD.segment_name {
+	white-space: nowrap;
+}
+
+TABLE.overview TD.gene_name {
+	white-space: nowrap;
+}
+
+IMG {
+	border: 0;
+}
+
+A:link { color: #656D91; text-decoration: none; }
+A:visited { color: #656D91; text-decoration: none; }
+A:hover { color: #656D91; text-decoration: underline; }
+A:active { color: #656D91; text-decoration: none; }
+
+/* Lists don't need the indented margins: */
+OL { padding-left: 1em; }
+UL { padding-left: 1em; }
+DL { padding-left: 1em; }
+
+
