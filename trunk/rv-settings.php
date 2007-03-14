@@ -16,10 +16,10 @@
 	$width = $pageWidth - $leftIndent;
 	
 	$database = DB_NAME;
-	$blastallpath = "/usr/local/bin/blastall";
-	$formatdbpath = "/usr/local/bin/formatdb";
-	$fastafilespath = "/usr/local/bin/fasta_files";
-	$clustalwpath = "/usr/local/bin/clustalw";
+	$blastallpath = "/usr/bin/blastall";
+	$formatdbpath = "/usr/bin/formatdb";
+	$fastafilespath = "/usr/bin/fasta_files";
+	$clustalwpath = "/usr/bin/clustalw";
 	$root = "/virus/";
 	$decoration = $root."Decoration";
 	$empty = $root."Decoration/empty.gif";
