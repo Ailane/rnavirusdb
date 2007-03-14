@@ -7,17 +7,17 @@ package settings;
 use strict;
 
 #use vars qw($tmpDir $subtypingDir $tmpUrl $clustalw $paup $drawgram $puzzle $ps2pdf $phyliptreefile $phylipdrawgramcmds $phylis $fastainfo $trimalignment $allowBatch $clean);
-use vars qw($tmpDir $tmpUrl $clustalw $ps2pdf $phyliptreefile $phylipdrawgramcmds $allowBatch $clean);
+use vars qw($docRootDir $tmpDir $tmpUrl $clustalw $ps2pdf $phyliptreefile $phylipdrawgramcmds $allowBatch $clean);
 
 # installation directories and options
-$docRootDir = "/sw/var/www";
+$docRootDir = "/var/www";
 $tmpUrl = "/virus/tmp";
-$tmpDir = $docRootdir . $tmpUrl;
+$tmpDir = $docRootDir . $tmpUrl;
 $allowBatch = 1;
 $clean = 0;
 
 # paths to programs
-$clustalw = "/usr/local/bin/clustalw";
+$clustalw = "/usr/bin/clustalw";
 #$paup = "/usr/local/biotools/paup/paup4b10-ppc-macosx";
 #$drawgram = "/usr/local/biotools/phylip/drawgram";
 #$puzzle = "/usr/local/biotools/treepuzzle/src/puzzle-macosx-Xcode";
