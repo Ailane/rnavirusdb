@@ -27,7 +27,7 @@
 	
 	drawHeader();
 	draw_toolbar();
-	
+
 	if ($coord) {
 		//echo 'coord is '.$coord.'<br>';
 		$array = preg_split("/_link_/", $coord);
@@ -108,6 +108,7 @@
 
 	// subroutines
 	function blast($query_file, $ref_file, $sequence) {
+		global $blastallpath;
 		$outfile = tempnam("/tmp", "results");
 		//echo "query file $query_file ref_file is $ref_file outfile is $outfile<br>";
 		exec("$blastallpath -p blastn -i $query_file -d $ref_file -o $outfile -m 8");
@@ -121,7 +122,7 @@
 	}	
 
 	function cut_slice($query_start, $query_stop, $ref_start, $ref_stop, $segmentID, $sequence) {
-		global $db;
+		global $db, $clustalwpath, $readseqpath;
 		//echo ' old ref start is '.$ref_start.'<br>';
 		//echo ' old ref stop is '.$ref_stop.'<br>';
 		//echo ' seq is '.$sequence.'<br>';
@@ -179,10 +180,7 @@
 		$clustal_out_nexus = tempnam("/tmp", "temp_file"); # create file for converting clustalw output into nexus (some bug in program)
 		
 		exec("$clustalwpath -profile1=$temp_file2 -profile2=$temp_file -output=FASTA -outfile=$clustal_out ");
-  // http://sourceforge.net/projects/readseq
-  // http://bioinformatics.ubc.ca/resources/tools/readSeq
-  // http://iubio.bio.indiana.edu/soft/molbio/readseq/
-		exec("/bin/readseq -all -f17 $clustal_out > $clustal_out_nexus");
+		exec("$readseqpath -all -f17 $clustal_out > $clustal_out_nexus");
 
 //		echo '<a href='.$clustal_out.'>file</a><br>';
 		$filehandle = fopen("$clustal_out", "r");

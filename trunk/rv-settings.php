@@ -20,6 +20,10 @@
 	$formatdbpath = "/usr/bin/formatdb";
 	$fastafilespath = "/usr/bin/fasta_files";
 	$clustalwpath = "/usr/bin/clustalw";
+  // http://sourceforge.net/projects/readseq
+  // http://bioinformatics.ubc.ca/resources/tools/readSeq
+  // http://iubio.bio.indiana.edu/soft/molbio/readseq/
+	$readseqpath = "/bin/readseq";
 	$root = "/virus/";
 	$decoration = $root."Decoration";
 	$empty = $root."Decoration/empty.gif";
