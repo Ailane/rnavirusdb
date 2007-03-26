@@ -19,7 +19,7 @@
 
 	$virusID = $_GET['id'];
 	$query = $_GET['query'];
-	
+
 	if ($virusID) {
 		$result = mysql_query("SELECT * FROM Viruses WHERE id=\"$virusID\"",$db);	
 		$virus = mysql_fetch_array($result);
@@ -362,7 +362,7 @@
 			$tgf = preg_replace("/style{r}{plain}{[^}]+}/", "style{r}{plain}{10}", $tgf);
  	 		file_put_contents($tgfFile, $tgf);
   			exec ("($TGF -p $tgfFile)");
-  	  		exec ("($PS2PDF $epsFile /var/www/virus${pdfFile})"); /* TODO use documentroot instead of hardcoded path */
+  	  		exec ("($PS2PDF $epsFile " . ABSPATH . "${pdfFile})");
 	 	}
 	 	else {
 	 		$pdfFile = FALSE; # There is no pdf file
