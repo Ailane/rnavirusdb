@@ -23,11 +23,9 @@ $jobname = $$;
 mkdir $localdir;
 chdir $localdir;
 
-system "cp $docRootDir/virus/BlastAlign $localdir";
-system "cp $docRootDir/virus/formatdb $localdir";
-system "cp $docRootDir/virus/blastall $localdir";
-system "cp $docRootDir/virus/fasta_files/nuc_library.lib $localdir";
-system "cp $docRootDir/virus/logoVirus.gif $localdir";
+system "cp $settings::blastAlignPath $localdir";
+system "cp $settings::nuc_libPath $localdir";
+system "cp $settings::logoVirusPath $localdir";
 
   # Get the  input sequence
 my $sequence = "";
@@ -49,10 +47,12 @@ my $command =  "perl BlastAlign -i all_seqs -r user_query -m 0.5";
    print header,
     start_html('BlastAlign Progress'),
 	hr;
-    print "<img alt=\"\" src=\"http://evolve.zoo.ox.ac.uk/virus/logoVirus.gif\" usemap=\"\#logoVirus.gif\" style=\"border: 0px solid ; width: 820px; height: 62px;\"> <map
+    print "<img alt=\"\" src=\"$localurl/logoVirus.gif\" usemap=\"\#logoVirus.gif\" style=\"border: 0px solid ; width: 820px; height: 134px;\"> <map
  						name=\"logoVirus.gif\">
 						<area shape=\"RECT\" alt=\"Evolutionary Biology Group, Oxford\"
- 						coords=\"12,10,202,56\" href=\"http://evolve.zoo.ox.ac.uk\">
+ 						coords=\"0,60,190,114\" href=\"http://evolve.zoo.ox.ac.uk\">
+						<area shape=\"RECT\" alt=\"Bioinformatics Institute, Auckland\"
+ 						coords=\"300,60,480,114\" href=\"http://www.cebl.auckland.ac.nz\">
 						</map>";
 						
     print "<center> <font size \"+1\"> <b>BlastAlign Progress</b><br><hr> </font>";
