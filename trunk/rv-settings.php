@@ -16,6 +16,7 @@
 	$width = $pageWidth - $leftIndent;
 	
 	$database = DB_NAME;
+	$googleAnalyticsTrackerID = GOOGLE_TRACKER_ID;
 	$blastallpath = "/usr/bin/blastall";
 	$formatdbpath = "/usr/bin/formatdb";
 	$fastafilespath = "/usr/bin/fasta_files";
@@ -93,11 +94,12 @@
 	}
 
 	function closeDocument() {
+		global $googleAnalyticsTrackerID;
 		echo('
 					<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
 					</script>
 					<script type="text/javascript">
-						_uacct = "UA-277246-1";
+						_uacct = "' . $googleAnalyticsTrackerID . '";
 						urchinTracker();
 					</script>
 				</body>
