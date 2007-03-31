@@ -20,6 +20,8 @@ define('DB_HOST', 'cs-db.cs.auckland.ac.nz');
 
 $table_prefix  = 'rv_';   // example: 'rv_' or 'b2' or 'mylogin_'
 
+// Google Analytics Tracker ID to use for this site
+define('GOOGLE_TRACKER_ID', 'UA-EXAMPLE-NUM');  // Your Google Analytics tracker code
 /* Stop editing */
 
 define('ABSPATH', dirname(__FILE__).'/');
