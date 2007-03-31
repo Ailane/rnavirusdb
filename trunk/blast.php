@@ -84,7 +84,7 @@
 		<dt>Paste below a single sequence (amino acid or nucleotide):</dt>
 		<dd>
 		<form action="blast.php" method="post">
-			<p><textarea name="query" rows="10" cols="60">  </textarea> <br>
+			<p><textarea name="query" rows="10" cols="60"></textarea> <br>
 			<input type="submit" value="BLAST"/> <input type="reset" value="reset"></p>
 		</form>
 		</dd>
