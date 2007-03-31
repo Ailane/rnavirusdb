@@ -6,11 +6,17 @@ package settings;
 
 use strict;
 
-#use vars qw($tmpDir $subtypingDir $tmpUrl $clustalw $paup $drawgram $puzzle $ps2pdf $phyliptreefile $phylipdrawgramcmds $phylis $fastainfo $trimalignment $allowBatch $clean);
-use vars qw($docRootDir $tmpDir $tmpUrl $clustalw $ps2pdf $phyliptreefile $phylipdrawgramcmds $allowBatch $clean);
+use vars qw($docRootDir $blastAlignPath $nuc_libPath $logoVirusPath $tmpDir $tmpUrl $clustalw $ps2pdf $phyliptreefile $phylipdrawgramcmds $allowBatch $clean);
 
 # installation directories and options
+
+# root directory of the web server
 $docRootDir = "/var/www";
+# absolute path of programs and data used by BlastAlign.cgi
+$blastAlignPath = "/usr/lib/cgi-bin/BlastAlign";
+$logoVirusPath = $docRootDir . "/virus/images/logoVirus.gif";
+$nuc_libPath = "/usr/bin/fasta_files/nuc_library.lib";
+
 $tmpUrl = "/virus/tmp";
 $tmpDir = $docRootDir . $tmpUrl;
 $allowBatch = 1;
@@ -27,3 +33,5 @@ $ps2pdf = "/usr/bin/ps2pdf";
 # for phylip-3.5:
 $phyliptreefile = "intree";
 $phylipdrawgramcmds = "(echo V; echo N;  echo Y)";
+
+1;
