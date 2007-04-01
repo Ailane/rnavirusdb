@@ -87,8 +87,7 @@
 	
 	function genome_overview($id, $width_segment_string) { # just passing segment id (subroutine copied from main genome overview where virus_id is passed and it loops through all the segemnts of the segmented viruses
 		global $db;
-		
-		$resource = mysql_query("SELECT length, name FROM segments WHERE id=\"$id\"",$db);
+		$resource = mysql_query("SELECT length, name FROM Segments WHERE id=\"$id\"",$db);
 		
 		if ($row = mysql_fetch_array($resource)) {
 			do {
@@ -130,7 +129,7 @@
 
 	function get_gene($id, $length,$width_segment_string) {
 		global $db;
-		$resource = mysql_query("SELECT coord, id, name FROM proteins WHERE segment_id=\"$id\"",$db);
+		$resource = mysql_query("SELECT coord, id, name FROM Proteins WHERE segment_id=\"$id\"",$db);
 		$gene_counter = 1;
 		if ($row = mysql_fetch_array($resource)) {
 			do {
@@ -180,7 +179,7 @@
 	
 	function get_gene_names($id) {
 		global $db;
-		$resource = mysql_query("SELECT coord, id, name, function FROM proteins WHERE segment_id=\"$id\"",$db);
+		$resource = mysql_query("SELECT coord, id, name, function FROM Proteins WHERE segment_id=\"$id\"",$db);
 		$gene_counter = 1;
 		if ($row = mysql_fetch_array($resource)) {
 			do {
