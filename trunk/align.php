@@ -190,7 +190,7 @@
 		}
 		fclose($filehandle);
 		echo '<br><br><h1>Click here to download alignment</h1>
-		<form action="download.html" method="post"><input type="submit" value="Alignment"/><input type="hidden" name="align_query" value="'.$text.'"/></form>
+		<form action="download.php" method="post"><input type="submit" value="Alignment"/><input type="hidden" name="align_query" value="'.$text.'"/></form>
 		';
 		
 		$paup_out = tempnam("/tmp", "paup_out_file"); # create file for paup output

@@ -47,7 +47,44 @@
 			';
 		}
 	}
-		
+	
+	elseif ($results) {
+		if (file_exists("$results")) {
+			$filehandle = fopen("$results", "r");
+			while (!feof($filehandle)) {
+				$text = fgets($filehandle);
+				if (trim($text) != "") {
+					$array = preg_split("/\t/", $text);
+					$sequence = get_name($array[1]);
+					if ($array[10] < 0.05) {
+						$queue = array($sequence[1], $sequence[0], $array[1], $array[8], $array[9], $array[8], $array[9], $array[1], $sequence[2], $array[10]);
+					}
+				}
+			}
+			fclose($filehandle);
+			if ($queue) {
+				echo "<DL><TABLE CLASS='data' WIDTH='600px'>";
+				echo "<TR>";
+				echo "<TD CLASS='heading'>Match<TD CLASS='heading'>Coordinates</TD><TD CLASS='heading'>E-value</TD>";
+				echo "</TR>";
+				echo '<br><br><h1>Found matches to the following entries in our database</h1>';
+				echo '<p>Click on coordinates to see genomic location of each match (or on the name of the match for more information)</p>';
+				echo '<dl>';
+				echo '<TR><TD> <a href="virus.php?id='.$queue[0].'">'.$queue[1].'</a></TD><TD><a href="match.php?id='.$queue[2].'-'.$queue[3].'-'.$queue[4].'">'.$queue[5].'-'.$queue[6].' on '.$queue[7].'</a>  ('.$queue[8].')</TD><TD>'.$queue[9].'</TD>';
+				echo '</dl>';
+ 				echo "</TABLE>";
+			}
+			else {
+				echo "<p>Sorry, no matches found</p>";
+			}
+		}
+		else {
+  			exit('<br>WebServer Error: Failed to open blast results file');
+		}
+	}
+
+/*	
+	
 	elseif ($results) {
 		//echo "blast output at $results<br>";
 		if (file_exists("$results")) {
@@ -77,7 +114,7 @@
   			exit('<br>WebServer Error: Failed to open blast results file');
 		}
 	}
-	
+*/	
 	else {
 		echo '
 		<h1><br><br>BLAST your sequence against our library of 701 RNA viral genomes </h1>
