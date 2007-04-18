@@ -26,11 +26,18 @@
 	
 	echo'	<br><h1>Credits<br><br>The Zoology Department, University of Oxford, U.K.</h1>
 	Robert Belshaw<br>
-	Tulio de Oliveira<br>
 	Oliver Pybus<br><br>
 
 	<h1>Institute of Evolutionary Biology, University of Edinburgh, U.K.</h1>
-	Andrew Rambaut
+	Andrew Rambaut<br><br>
+	
+	<h1>MRC Pathogen Bioinformatics Unit, South African National Bioinformatics Institute,
+	Cape Town, South Africa. </h1>
+	Tulio de Oliveira<br><br>
+	
+	<h1>Department of Computer Science, The University of Auckland, New Zealand. </h1>
+	Sidney Markowitz<br>
+	Alexei Drummond<br><br>
 	';
 
 	drawFooter("Robert Belshaw, Tulio de Oliveira & Andrew Rambaut"); 
