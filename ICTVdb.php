@@ -29,7 +29,7 @@
 		get_link($query);
 	}
 	
-	drawFooter("Robert Belshaw & Andrew Rambaut"); 
+	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz& Andrew Rambaut"); 
 	
 	closeDocument();
 	/* 

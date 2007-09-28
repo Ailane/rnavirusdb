@@ -120,7 +120,7 @@
 	}
 	
 	
-	drawFooter("Robert Belshaw, Tulio de Oliviera & Andrew Rambaut"); 
+	drawFooter("Robert Belshaw, Tulio de Oliviera, Sidney Markowitz & Andrew Rambaut"); 
 	
 	closeDocument();
 	
@@ -199,6 +199,9 @@
 			echo '<dl>';
 			do {
 				$proteinName = $protein["name"];
+				if ($proteinName == "") {
+					$proteinName = "unnamed protein";
+				}
 				$temp_array = preg_split("/;/", $proteinName);
 				$proteinName = $temp_array[0];
 				$proteinName = preg_replace("/APOST/", "'", $proteinName);

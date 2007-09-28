@@ -81,7 +81,7 @@
 			<TD>Alignment to screen</TD>
 			<TD>Download alignment</TD>
 			<TD>Download tree file</TD>
-			<TD>Download tree pdf</TD>
+			<TD>Tree to screen</TD>
 			<TD>Align your sequence</TD></TR>';
 
 			do {
@@ -103,7 +103,7 @@
 				<TD><form action="virus.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="Screen"/></form></TD>
 				<TD><form action="download.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="File"/></form></TD>
 				<TD><form action="download.php" method="get"><input type="hidden" name="tree_query" value="'.$segmentID.'"/><input type="submit" value="'.$symbol.'"/></form></TD>
-				<TD><a href="/virus'.$pdfFile.'"><input type="submit" value="'.$symbol.'"/></a></TD>
+				<TD><a href="'.$pdfFile.'"><input type="submit" value="'.$symbol.'"/></a></TD>
 				<TD><form action="align.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="Align"/></form></TD></TR>';
 			} while ($segment = mysql_fetch_array($result));
 			echo "</TABLE>";
@@ -114,7 +114,7 @@
 		}
 		genome_overview($virusID);
 	}
-	drawFooter("Robert Belshaw, Tulio de Oliveira & Andrew Rambaut"); 
+	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
 	closeDocument();
 	
 
@@ -346,7 +346,7 @@
 			else {
 				echo "<br>WebServer Error: no handle created for treefile<br>";
 			}
-			$TGF = "/usr/local/bin/tgf";
+			$TGF = "/Library/WebServer/Documents/executables/bin/tgf/tgf10rc1/tgf";
 			$PS2PDF ="/usr/bin/ps2pdf";
 			
  			$pdfFile = str_replace('tre', 'pdf', $treefile);
@@ -362,6 +362,7 @@
 			$tgf = preg_replace("/style{r}{plain}{[^}]+}/", "style{r}{plain}{10}", $tgf);
  	 		file_put_contents($tgfFile, $tgf);
   			exec ("($TGF -p $tgfFile)");
+  			exec ("($PS2PDF /tmp/test.eps /tmp/test.pdf)");
   	  		exec ("($PS2PDF $epsFile " . ABSPATH . "${pdfFile})");
 	 	}
 	 	else {

@@ -30,8 +30,6 @@
 		$infile = write_file($query);
 		$outfile = tempnam("/tmp", "results");
 		$type = check_type($query);
-		//echo 'type is '.$type.'<br>';
-		//echo "infile = $infile outfile = $outfile<br>";
 		if ($type) {
 			if ($type == "aa")	{
 				exec("$blastallpath -p tblastn -i $infile -d $fastafilespath/nuc_library.lib -o $outfile -m 8");
@@ -51,6 +49,7 @@
 	elseif ($results) {
 		if (file_exists("$results")) {
 			$filehandle = fopen("$results", "r");
+			$num_rows = 0;
 			while (!feof($filehandle)) {
 				$text = fgets($filehandle);
 				if (trim($text) != "") {
@@ -58,11 +57,13 @@
 					$sequence = get_name($array[1]);
 					if ($array[10] < 0.05) {
 						$queue = array($sequence[1], $sequence[0], $array[1], $array[8], $array[9], $array[8], $array[9], $array[1], $sequence[2], $array[10]);
+						$stack[$num_rows] = $queue;
+						$num_rows++;
 					}
 				}
 			}
 			fclose($filehandle);
-			if ($queue) {
+			if ($num_rows > 0) {
 				echo "<DL><TABLE CLASS='data' WIDTH='600px'>";
 				echo "<TR>";
 				echo "<TD CLASS='heading'>Match<TD CLASS='heading'>Coordinates</TD><TD CLASS='heading'>E-value</TD>";
@@ -70,8 +71,10 @@
 				echo '<br><br><h1>Found matches to the following entries in our database</h1>';
 				echo '<p>Click on coordinates to see genomic location of each match (or on the name of the match for more information)</p>';
 				echo '<dl>';
-				echo '<TR><TD> <a href="virus.php?id='.$queue[0].'">'.$queue[1].'</a></TD><TD><a href="match.php?id='.$queue[2].'-'.$queue[3].'-'.$queue[4].'">'.$queue[5].'-'.$queue[6].' on '.$queue[7].'</a>  ('.$queue[8].')</TD><TD>'.$queue[9].'</TD>';
-				echo '</dl>';
+				for ($i = 0; $i < $num_rows; $i++) {
+					echo '<TR><TD> <a href="virus.php?id='.$stack[$i][0].'">'.$stack[$i][1].'</a></TD><TD><a href="match.php?id='.$stack[$i][2].'-'.$stack[$i][3].'-'.$stack[$i][4].'">'.$stack[$i][5].'-'.$stack[$i][6].' on '.$stack[$i][7].'</a>  ('.$stack[$i][8].')</TD><TD>'.$stack[$i][9].'</TD>';
+					echo '</dl>';
+				}
  				echo "</TABLE>";
 			}
 			else {
@@ -83,38 +86,7 @@
 		}
 	}
 
-/*	
-	
-	elseif ($results) {
-		//echo "blast output at $results<br>";
-		if (file_exists("$results")) {
-			echo "<DL><TABLE CLASS='data' WIDTH='600px'>";
-			echo "<TR>";
-			echo "<TD CLASS='heading'>Match<TD CLASS='heading'>Coordinates</TD><TD CLASS='heading'>E-value</TD>";
-			echo "</TR>";
-			echo '<br><br><h1>Found matches to the following entries in our database</h1>';
-			echo '<p>Click on coordinates to see genomic location of each match (or on the name of the match for more information)</p>';
-			echo '<dl>';
-			$filehandle = fopen("$results", "r");
-			while (!feof($filehandle)) {
-				$text = fgets($filehandle);
-				if (trim($text) != "") {
-					$array = preg_split("/\t/", $text);
-					$sequence = get_name($array[1]);
-					if ($array[10] < 0.05) {
-						echo '<TR><TD> <a href="virus.php?id='.$sequence[1].'">'.$sequence[0].'</a></TD><TD><a href="match.php?id='.$array[1].'-'.$array[8].'-'.$array[9].'">'.$array[8].'-'.$array[9].' on '.$array[1].'</a>  ('.$sequence[2].')</TD><TD>'.$array[10].'</TD>';
-					}
-				}
-			}
-			fclose($filehandle);
- 			echo '</dl>';
- 			echo "</TABLE>";
-		}
-		else {
-  			exit('<br>WebServer Error: Failed to open blast results file');
-		}
-	}
-*/	
+
 	else {
 		echo '
 		<h1><br><br>BLAST your sequence against our library of 701 RNA viral genomes </h1>
@@ -134,25 +106,21 @@
 		';
 	}
 	
-	drawFooter("Robert Belshaw, Tulio de Oliveira & Andrew Rambaut"); 
+	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
 	
 	// sub-routines
 	
 	function check_type($query) {
 		$sequence = preg_replace('/>(\S+)/', '', $query); # strip out name if fasta
 		$sequence = preg_replace('/\s+/', '', $sequence); # strip out linebreaks if fasta
-		//echo "seq is $sequence<br>";
 		$non_nuc = "";
 		$non_aa = "";
 		$non_nuc = preg_replace('/[acgtrymwskdhbvn-]/i', '', $sequence); # see what non nucleotide characters you have
-		//echo "non_nuc is $non_nuc<br>";
 		if ($non_nuc == "") {
-			//echo "<br><br>Your sequence is nucleotide<br>";
 			$type = "nuc";
 		}
 		else {
 			$non_aa = preg_replace('/[deqilfp\*]/i', '', $non_nuc);
-			//echo "non_aa is $non_aa<br>";
 			if ($non_aa == "") {
 				echo "<br><br>Your sequence is amino acid<br>";
 				$type = "aa";
