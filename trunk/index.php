@@ -61,7 +61,7 @@ coords="135,237,213,380" href="proteins.php"></TD>';
 	</dl>
 	';
 
-	drawFooter("Robert Belshaw, Tulio de Oliveira & Andrew Rambaut"); 
+	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
 	
 	closeDocument();
 	

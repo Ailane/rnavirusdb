@@ -101,7 +101,7 @@
 
 	openDocument($title);
 
-	drawFooter("Robert Belshaw, Tulio de Oliveira & Andrew Rambaut"); 
+	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
 	
 	closeDocument();
 	

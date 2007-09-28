@@ -11,12 +11,27 @@
   the specific language governing permissions and limitations under the
   License.
   ***************/
+// **  You need to copy config-dummy.php to config.php and edit in proper values for the database and paths to the executables ** //
 // ** MySQL settings ** //
-// **  copy config-dummy.php to config.php and edit in proper values for the actual database ** //
-define('DB_NAME', 'bioinf');     // The name of the database
-define('DB_USER', 'bioinf');     // Your MySQL username
-define('DB_PASSWORD', 'PASSWORD'); // ...and password
-define('DB_HOST', 'cs-db.cs.auckland.ac.nz');
+
+define('DB_NAME', '');     // The name of the database
+define('DB_USER', '');     // Your MySQL username
+define('DB_PASSWORD', ''); // ...and password
+define('DB_HOST', '');
+
+// ** Paths to Executables ** //
+
+$blastallpath = "";
+$formatdbpath = "";
+$fastafilespath = "";
+$clustalwpath = "";
+$readseqpath = "";
+$TGF = "";
+$PS2PDF ="";
+
+// http://sourceforge.net/projects/readseq
+// http://bioinformatics.ubc.ca/resources/tools/readSeq
+// http://iubio.bio.indiana.edu/soft/molbio/readseq/
 
 $table_prefix  = 'rv_';   // example: 'rv_' or 'b2' or 'mylogin_'
 
