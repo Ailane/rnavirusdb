@@ -536,43 +536,6 @@
 				';
 	}
 
-/** this function seems obsolete and isn't called anywhere		
-	function drawPublication($publication, $db) {
-		$title = rtrim($publication["title"], ".");
-		echo('<div class="box-subtitle">
-			<a href="/publications.php?id='.$publication["id"].'">'.$title . '</a>
-			</div>
-			<div class="box-body">');
-		$authors1 = explode("&", $publication["authors"]);
-		$authors = explode(",", $authors1[0]);
-		if (sizeof($authors1) > 1) {
-			array_push($authors, $authors1[1]);
-		}
-					
-		$n = sizeof($authors);
-		for ($i=0; $i < $n; $i++) {
-			$author = trim($authors[$i]);
-			list($name, $initials) = explode(" ", $author);
-			$result = mysql_query("SELECT * FROM People WHERE lastName=\"$name\" AND initials=\"$initials\"",$db);
-			$person = mysql_fetch_array($result);
-			if ($person) {
-				echo('<b><a href="/people.php?id='.$person[id].'">'.$authors[$i].'</a></b>');				
-			} else {
-				echo($author);
-			}
-			
-			if ($i == ($n - 2)) {
-				echo(' & ');
-			} else if ($i < ($n - 2)) {
-				echo(', ');
-			} 
-		}
-		printf(" (%s) <i>%s</i> <b>%s</b>, %s.</div>\n", 
-				$publication["year"], $publication["journal"], $publication["volume"], 
-				$publication["pages"]);
-	}
-**/
-
 	function emailAddress($email) {
 		if ($email == NULL) {
 			return "Unknown email address";

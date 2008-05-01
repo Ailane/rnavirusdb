@@ -91,7 +91,7 @@
 				}
 				$segmentID = $segment["id"];
 				$number_aligns = getAlignments($segment["id"]);
-				$pdfFile = getTreePDF($segmentID);
+				$pdfFile = getTreePDF($segmentID, $TGF, $PS2PDF);
 				if ($pdfFile) {
 					$symbol = "Tree";
 				}
@@ -103,7 +103,7 @@
 				<TD><form action="virus.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="Screen"/></form></TD>
 				<TD><form action="download.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="File"/></form></TD>
 				<TD><form action="download.php" method="get"><input type="hidden" name="tree_query" value="'.$segmentID.'"/><input type="submit" value="'.$symbol.'"/></form></TD>
-				<TD><a href="'.$pdfFile.'"><input type="submit" value="'.$symbol.'"/></a></TD>
+				<TD><a href="'.$myURL.'rnavirusdb/'.$pdfFile.'"><input type="submit" value="'.$symbol.'"/></a></TD>
 				<TD><form action="align.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="Align"/></form></TD></TR>';
 			} while ($segment = mysql_fetch_array($result));
 			echo "</TABLE>";
@@ -325,29 +325,25 @@
 	}
 	
 	// Tree construction
-	function getTreePDF($segmentID) {
+	function getTreePDF($segmentID, $TGF, $PS2PDF) {
 		global $db;
 		$resource = mysql_query("SELECT tree FROM Segments WHERE id=\"$segmentID\"",$db);	
 		$tree = mysql_result($resource, 0); // only one cell in field
 		if ($tree) { # tree will not be there if fewer than 3 aligned sequences
-			//echo 'id is '.$segmentID. 'tree is '.$tree.'<br>';
-			$treefile = tempnam("/tmp", "arvore");
+			
+			$treefile = tempnam("/tmp", "arvore"); # use relative path to tmp folder
 			$treefile = $treefile.".tre";
 			$handle = fopen($treefile, "w");
 			if ($handle) {
-				//echo "made handle $infile<br>";
 				if (fwrite($handle, "$tree") == TRUE) {
-					//echo "created file<br>";
 				}
 				else {
-					echo "<br>WebServer Error: cannot write file<br>";
+					echo "<br>WebServer Error: cannot write treefile<br>";
 				}
 			}
 			else {
 				echo "<br>WebServer Error: no handle created for treefile<br>";
 			}
-			$TGF = "/Library/WebServer/Documents/executables/bin/tgf/tgf10rc1/tgf";
-			$PS2PDF ="/usr/bin/ps2pdf";
 			
  			$pdfFile = str_replace('tre', 'pdf', $treefile);
    			$tgfFile = str_replace('tre', 'tgf', $treefile);
@@ -362,9 +358,9 @@
 			$tgf = preg_replace("/style{r}{plain}{[^}]+}/", "style{r}{plain}{10}", $tgf);
  	 		file_put_contents($tgfFile, $tgf);
   			exec ("($TGF -p $tgfFile)");
-  			exec ("($PS2PDF /tmp/test.eps /tmp/test.pdf)");
-  	  		exec ("($PS2PDF $epsFile " . ABSPATH . "${pdfFile})");
-	 	}
+    			exec ("($PS2PDF $epsFile)");
+    	 	 	exec ("(cp $pdfFile ".ABSPATH."tmp/)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
+  	 	}
 	 	else {
 	 		$pdfFile = FALSE; # There is no pdf file
 	 	}

@@ -28,14 +28,15 @@
 	 
 	if ($query) {
 		$infile = write_file($query);
-		$outfile = tempnam("/tmp", "results");
+		$outfile = tempnam("/tmp", "BLASTresults");
 		$type = check_type($query);
+		
 		if ($type) {
 			if ($type == "aa")	{
-				exec("$blastallpath -p tblastn -i $infile -d $fastafilespath/nuc_library.lib -o $outfile -m 8");
+				exec("$blastallpath -p tblastn -i $infile -d cgi-bin/nuc_library_acc.lib -o $outfile -m 8");
 			}
 			elseif ($type == "nuc")	{
-				exec("$blastallpath -p blastn -i $infile -d $fastafilespath/nuc_library.lib -o $outfile -m 8");
+				exec("$blastallpath -p blastn -i $infile -d cgi-bin/nuc_library_acc.lib -o $outfile -m 8");
 			}
 			echo '<br><br><br>Click here to get results of blast search
 			<form action="blast.php" method="post">
@@ -88,8 +89,10 @@
 
 
 	else {
+		$res = mysql_query("SELECT COUNT(*) FROM viruses",$db);
+		$num = mysql_result($res, 0);  # will only be one entry
 		echo '
-		<h1><br><br>BLAST your sequence against our library of 701 RNA viral genomes </h1>
+		<h1><br><br>BLAST your sequence against our library of '.$num.' RNA viral genomes </h1>
 		<dt>Paste below a single sequence (amino acid or nucleotide):</dt>
 		<dd>
 		<form action="blast.php" method="post">
@@ -158,7 +161,7 @@
 	}
 	
 	function write_file($query) {	
-		$infile = tempnam("/tmp", "query");
+		$infile = tempnam("/tmp", "BLASTquery");
 		$handle = fopen($infile, "w");
 		if ($handle) {
 			//echo "made handle $infile<br>";

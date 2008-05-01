@@ -53,7 +53,7 @@
 	elseif ($tree_pdf) {
 		echo $tree_pdf;
 	}
-	else {
+	elseif ($align_query) {
 		echo $align_query;
 	}
 
