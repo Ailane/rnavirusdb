@@ -23,15 +23,12 @@ define('DB_HOST', '');
 
 $blastallpath = "";
 $formatdbpath = "";
-$fastafilespath = "";
 $clustalwpath = "";
 $readseqpath = "";
 $TGF = "";
 $PS2PDF ="";
-
-// http://sourceforge.net/projects/readseq
-// http://bioinformatics.ubc.ca/resources/tools/readSeq
-// http://iubio.bio.indiana.edu/soft/molbio/readseq/
+$PAUPpath  = "";
+$myURL = "http://";
 
 $table_prefix  = 'rv_';   // example: 'rv_' or 'b2' or 'mylogin_'
 

@@ -32,14 +32,10 @@
 	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz& Andrew Rambaut"); 
 	
 	closeDocument();
-	/* 
-	[<a href="http://www.ncbi.nlm.nih.gov/ICTVdb/00.003.htm">ICTVdb link</a>]</td>
-	*/
-	// sub-routines
+
+	// sub-routine
 
 	function get_link($query ) {
-		$db = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD); // Need to call within function
-		mysql_select_db("belshaw_virus",$db);
 		$resource = mysql_query("SELECT link FROM ICTVlinks WHERE name=\"$query\"",$db);
 		if ($row = mysql_fetch_array($resource)) {
 			do {

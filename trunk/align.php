@@ -15,7 +15,6 @@
 	
 	$db = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
 	mysql_select_db($database,$db);
-	
 	$title = "Alignment";
 	$segmentID = $_GET[query]; # 1. Called from virus page
 	if (!$segmentID) {
@@ -83,12 +82,15 @@
 	
 	
 	else {
+		$res = mysql_query("SELECT COUNT(*) FROM viruses",$db);
+		$num = mysql_result($res, 0);  # will only be one entry
+
 		echo '<br><br><h1>Click here to select virus to which you wish to align your sequence</h1>
 		<form action="browse.php" method="get"><input type="submit" value="Browse"/></form>
 	
-		<br><br><p><h1>Or, attempt to align your sequence to our library of 701 RNA viral genomes</h1></p>
+		<br><br><p><h1>Or, attempt to align your sequence to our library of '.$num.' RNA viral genomes</h1></p>
 		Paste a single nucleotide sequence below (in any format) and click Run<br>
-		<form action="/cgi-bin/BlastAlign.cgi" method="get">
+		<form action="'.$myURL.'/cgi-bin/BlastAlign.cgi" method="get">
 		<textarea name="blastseq" rows="6" cols="60"></textarea> <br>
 		<input value="Run" type="submit">
 		</form>
@@ -109,7 +111,7 @@
 	// subroutines
 	function blast($query_file, $ref_file, $sequence) {
 		global $blastallpath;
-		$outfile = tempnam("/tmp", "results");
+		$outfile = tempnam("/tmp", "BlastResults-");
 		//echo "query file $query_file ref_file is $ref_file outfile is $outfile<br>";
 		exec("$blastallpath -p blastn -i $query_file -d $ref_file -o $outfile -m 8");
 		echo '<br><br><h1>Click here to get results of initial BLAST search</h1>
@@ -122,7 +124,7 @@
 	}	
 
 	function cut_slice($query_start, $query_stop, $ref_start, $ref_stop, $segmentID, $sequence) {
-		global $db, $clustalwpath, $readseqpath;
+		global $db, $clustalwpath, $readseqpath, $PAUPpath, $myURL;
 		//echo ' old ref start is '.$ref_start.'<br>';
 		//echo ' old ref stop is '.$ref_stop.'<br>';
 		//echo ' seq is '.$sequence.'<br>';
@@ -175,11 +177,11 @@
 		}
 		$temp_file2 = write_align_file($ref_output);
 		//echo 'alignfile is '.$temp_file2.'<br>';
-		$clustal_out = tempnam("/tmp", "temp_file"); # create file for clustalw output
+		$clustal_out = tempnam("/tmp", "ClustalOut-"); # create file for clustalw output
 		//echo 'clustalout is '.$clustal_out.'<br>';
-		$clustal_out_nexus = tempnam("/tmp", "temp_file"); # create file for converting clustalw output into nexus (some bug in program)
+		$clustal_out_nexus = tempnam("/tmp", "ClustalOutNxs-"); # create file for converting clustalw output into nexus (some bug in program)
 		
-		exec("$clustalwpath -profile1=$temp_file2 -profile2=$temp_file -output=FASTA -outfile=$clustal_out ");
+		exec("$clustalwpath -profile1=$temp_file2 -profile2=$temp_file -output=FASTA -outfile=$clustal_out");
 		exec("$readseqpath -all -f17 $clustal_out > $clustal_out_nexus");
 
 //		echo '<a href='.$clustal_out.'>file</a><br>';
@@ -192,24 +194,25 @@
 		echo '<br><br><h1>Click here to download alignment</h1>
 		<form action="download.php" method="post"><input type="submit" value="Alignment"/><input type="hidden" name="align_query" value="'.$text.'"/></form>
 		';
-		
-		$paup_out = tempnam("/tmp", "paup_out_file"); # create file for paup output
-		$command_file = tempnam("/tmp", "command_file"); # create paup command file
-		$handle = fopen($command_file, "w");
-		if (fwrite($handle, "begin paup;\nset criterion=distance RootMethod=midpoint;\ndset distance=HKY ;\nNJ;\nsavetree brlens=yes format=NEXUS file=$paup_out replace=yes;\nquit;\nend;\n") == TRUE) {
-			//echo "created paup command file<br>";
+		$resource2 = mysql_query("SELECT count(*) FROM GenomeAligns WHERE segment_id=\"$segmentID\"",$db); # see if enough seqs for a tree
+		$num_seqs = mysql_result($resource2, 0); //only one cell in field;
+		if ($num_seqs > 1) { // cannot get tree unless > 1 genome seq in database
+			$paup_out = tempnam("/tmp", "PaupOut-"); // create file for paup output
+			$command_file = tempnam("/tmp", "PaupCommand-"); // create paup command file
+			$handle = fopen($command_file, "w");
+			if (fwrite($handle, "begin paup;\nset criterion=distance RootMethod=midpoint;\ndset distance=HKY ;\nNJ;\nsavetree brlens=yes format=NEXUS file=$paup_out replace=yes;\nquit;\nend;\n") == TRUE) {
+				//echo "created paup command file<br>";
+				}
+			else {
+				echo "<br>WebServer Error: cannot write command file for running paup<br>";
 			}
-		else {
-			echo "<br>WebServer Error: cannot write command file for running paup<br>";
+			//echo "input is".$clustal_out_nexus." command file is ".$command_file."outfile is ".$paup_out."<br>";
+
+			exec("$PAUPpath $clustal_out_nexus < $command_file");
+			$pdfFile = getTreePDF($paup_out);
+			echo '<br><br><h1>Click here to download phylogentic tree of alignment</h1>
+			<a href="'.$myURL.'rnavirusdb'.$pdfFile.'"><input type="submit" value="Tree"/></a>';
 		}
-		//echo "input is".$clustal_out_nexus." command file is ".$command_file."outfile is ".$paup_out."<br>";
-
-		exec("/usr/bin/paup $clustal_out_nexus < $command_file");
-		$pdfFile = getTreePDF($paup_out);
-
-		echo '<br><br><h1>Click here to download phylogentic tree of alignment</h1>
-		<a href="virus'.$pdfFile.'"><input type="submit" value="Tree"/></a>';
-
 	}
 	
 	function draw_toolbar() {
@@ -264,11 +267,8 @@
 		return $number;
 	}
 	
-	function getTreePDF($paup_out) {
-	
-		$TGF = "/usr/local/biotools/tgf/tgf10rc1/tgf";
-		$PS2PDF ="/usr/bin/pstopdf";
-			
+	function getTreePDF($paup_out, $TGF, $PS2PDF) {
+		global $TGF, $PS2PDF;
 		$pdfFile = $paup_out.".pdf";
 		$tgfFile = $paup_out.".tgf";
 		$epsFile = $paup_out.".eps";
@@ -283,8 +283,8 @@
  		file_put_contents($tgfFile, $tgf);
 		exec ("($TGF -p $tgfFile)");
   		exec ("($PS2PDF $epsFile)");
- 	 	exec ("(cp $pdfFile /Library/WebServer/Documents/virus/tmp/)");
-	 	return $pdfFile;
+ 	 	exec ("(cp $pdfFile ".ABSPATH."tmp/)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
+  	 	return $pdfFile;
     	}
 
 	function read_results($blast_results, $sequence) {
@@ -314,7 +314,7 @@
  		}
 	
 	function write_align_file($ref_output) {
-		$temp_file = tempnam("/tmp", "temp_file");
+		$temp_file = tempnam("/tmp", "Aligns-");
 		$handle = fopen($temp_file, "w");
 		if ($handle) {
 			//echo "made handle $infile<br>";
@@ -332,7 +332,7 @@
 	}
 	
 	function write_file($name,$seq) {
-		$temp_file = tempnam("/tmp", "temp_file");
+		$temp_file = tempnam("/tmp", "QuerySeq-");
 		$handle = fopen($temp_file, "w");
 		//echo "query file is ".$temp_file."seq is ".$seq;
 		if ($handle) {
@@ -356,7 +356,7 @@
 		if ($sequence = mysql_fetch_array($resource)) { # will only be one entry
 			$sequence = $sequence[0];
 		}
-		$ref_file = tempnam("/tmp", "ref_file");
+		$ref_file = tempnam("/tmp", "RefSeq");
 		$handle = fopen($ref_file, "w");
 		if ($handle) {
 			//echo "made handle $infile<br>";

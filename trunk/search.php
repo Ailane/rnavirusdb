@@ -58,8 +58,8 @@
 	}
 
 	
-	drawFooter("Robert Belshaw, Tulio de Oliveira & Andrew Rambaut<center> "); 
-	
+	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
+
 	closeDocument();
 	
 	// subroutines
