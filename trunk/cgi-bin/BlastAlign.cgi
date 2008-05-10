@@ -5,9 +5,6 @@ use lib (".");
 use CGI ":standard";
 
 my $logFile = "run.log";
-my $blastallpath = "/Library/WebServer/Documents/executables/bin/blastall";
-my $formatdbpath = "/Library/WebServer/Documents/executables/bin/formatdb";
-my $librarypath = "/library/webserver/documents/fasta_files/nuc_library.lib";
 
 # Create job directory and copy some files
 my $jobname = $$;
@@ -18,9 +15,9 @@ mkdir $dir_for_analysis;
 
 system "cp ../Documents/rnavirusdb/cgi-bin/BlastAlign $dir_for_analysis";
 system "cp ../Documents/rnavirusdb/cgi-bin/BlastAlign.py $dir_for_analysis";
-system "cp $blastallpath $dir_for_analysis";
-system "cp $formatdbpath $dir_for_analysis";
-system "cp $librarypath $dir_for_analysis";
+system "cp ../Documents/rnavirusdb/cgi-bin/blastall $dir_for_analysis";
+system "cp ../Documents/rnavirusdb/cgi-bin/formatdb $dir_for_analysis";
+system "cp ../Documents/rnavirusdb/cgi-bin/nuc_library.lib $dir_for_analysis";
 
 chdir $dir_for_analysis; # move into tmp directory
 
