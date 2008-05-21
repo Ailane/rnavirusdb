@@ -116,6 +116,8 @@
  						coords="0,60,190,114" href="http://evolve.zoo.ox.ac.uk">
 						<area shape="RECT" alt="Bioinformatics Institute, Auckland"
  						coords="300,60,480,114" href="http://www.cebl.auckland.ac.nz">
+						<area shape="RECT" alt="Institute of Evolutionary Biology, Edinburgh"
+ 						coords="600,60,820,114" href="http://tree.bio.ed.ac.uk/">
 						</map>
 
 					</td>
