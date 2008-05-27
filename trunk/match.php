@@ -24,7 +24,7 @@
 
 	$match = $_GET['id'];
 	
-	$title = "RNA Viruses";
+	$title = "RNA viruses";
 
 	if ($match) {
 	

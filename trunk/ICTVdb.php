@@ -17,7 +17,7 @@
 
 	mysql_select_db($database,$db);
 
-	$title = "RNA Viruses";
+	$title = "RNA viruses";
 	$query = $_GET['id'];
 
 	openDocument($title);

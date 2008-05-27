@@ -33,7 +33,7 @@
 	$trans_genome = $_GET[trans_genome];
 	
 	if ($virusID) {
-		$result = mysql_query("SELECT * FROM Viruses WHERE id=\"$virusID\"",$db);	
+		$result = mysql_query("SELECT * FROM viruses WHERE id=\"$virusID\"",$db);	
 		$virus = mysql_fetch_array($result);
 		$name = $virus["name"];
 		$title = "Proteins - ".$name;

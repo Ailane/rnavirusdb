@@ -148,7 +148,7 @@
 	
 	function get_name($id) {
 		global $db;
-		$result = mysql_query("SELECT Viruses.name, Viruses.id, Segments.name FROM Segments,Viruses WHERE Segments.id=\"$id\" AND Segments.virus_id = Viruses.id",$db);
+		$result = mysql_query("SELECT viruses.name, viruses.id, Segments.name FROM Segments,viruses WHERE Segments.id=\"$id\" AND Segments.virus_id = viruses.id",$db);
 		if ($sequence = mysql_fetch_array($result)) { # will only be one entry
 			//do {
 				//$name = $sequence[0];

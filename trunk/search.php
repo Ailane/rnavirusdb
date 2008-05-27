@@ -27,7 +27,7 @@
 	draw_toolbar();
 	
 	if ($query) {
-		$result = mysql_query("SELECT id, name, family, genus FROM Viruses WHERE (name LIKE \"%$query%\" OR  genus LIKE \"%$query%\" OR family LIKE \"%$query%\" OR abbreviations LIKE \"%$query%\") ORDER BY name",$db);
+		$result = mysql_query("SELECT id, name, family, genus FROM viruses WHERE (name LIKE \"%$query%\" OR  genus LIKE \"%$query%\" OR family LIKE \"%$query%\" OR abbreviations LIKE \"%$query%\") ORDER BY name",$db);
 		if ($virus = mysql_fetch_array($result)) {
 			echo "<br><br><h1>Select the virus name from the following matches to \"$query\":</h1>";
 			echo "<DL><TABLE CLASS='data' WIDTH='600px'>";
