@@ -31,7 +31,7 @@
 
 	drawHeader();
 	draw_toolbar();		
-	$result1 = mysql_query("SELECT DISTINCT type FROM Viruses ORDER BY type ASC",$db);	
+	$result1 = mysql_query("SELECT DISTINCT type FROM viruses ORDER BY type ASC",$db);	
 
 	if ($type = mysql_fetch_array($result1)) {
 	

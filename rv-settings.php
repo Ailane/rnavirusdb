@@ -108,17 +108,7 @@
 			<table width="'.$pageWidth.'" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						 <img alt="" src="images/logoVirus.gif"
-						 usemap="#logoVirus.gif"
- 						style="border: 0px solid ; width: 820px; height: 134px;"> <map
- 						name="logoVirus.gif">
-						<area shape="RECT" alt="Evolutionary Biology Group, Oxford"
- 						coords="0,60,190,114" href="http://evolve.zoo.ox.ac.uk">
-						<area shape="RECT" alt="Bioinformatics Institute, Auckland"
- 						coords="300,60,480,114" href="http://www.cebl.auckland.ac.nz">
-						<area shape="RECT" alt="Institute of Evolutionary Biology, Edinburgh"
- 						coords="600,60,820,114" href="http://tree.bio.ed.ac.uk/">
-						</map>
+					<img alt="" src="images/RNAlogotop.gif" style="border: 0px solid ; width: 820px; height: 60px;">
 
 					</td>
 
@@ -126,7 +116,34 @@
 		</table>
 		');
 	}
+	function drawHeaderFirstPage(){
+			echo('
+			<table width="'.$pageWidth.'" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>
 
+					<img alt="" src="images/RNAlogo.gif"
+						 usemap="#RNAlogo.gif"
+ 						style="border: 0px solid ; width: 820px; height: 120px;"> <map
+ 						name="RNAlogo.gif">
+						<area shape="RECT" alt="Evolutionary Biology Group, Oxford"
+ 						coords="0,60,190,114" href="http://evolve.zoo.ox.ac.uk">
+						<area shape="RECT" alt="SANBI, Cape Town"
+ 						coords="222,60,400,114" href="http://www.sanbi.ac.za"> 						
+						<area shape="RECT" alt="Bioinformatics Institute, Auckland"
+ 						coords="430,60,590,114" href="http://www.cebl.auckland.ac.nz">
+						<area shape="RECT" alt="Institute of Evolutionary Biology, Edinburgh"
+ 						coords="605,60,820,114" href="http://tree.bio.ed.ac.uk/">
+						</map>
+
+
+					</td>
+
+				</tr>
+		</table>
+		');
+	}
+	
 	function drawFooter($author) {
 		echo('<br><br>
 		<table class="box" width="100%" cellspacing="0" cellpadding="0">
@@ -139,6 +156,19 @@
 								<br><div class="box-extra" align="center">
 									<table width="800" cellspacing="0" cellpadding="0" BGCOLOR="#FFFFFF" align="center"><tr><td><center>For questions, suggestions or problems please contact:<a href="http://evolve.zoo.ox.ac.uk/people.html?id=belshawr"> Robert Belshaw</a><br>Developed by ' . $author . '<br>Page layout last updated ' . date("d F Y ", getlastmod()) . 								
 									'</center></td></tr><tr><td align="center">Funded by the Wellcome Trust, an EU Marie Curie Fellowship and the Royal Society</td></tr></table></div>
+						<br><img alt="" src="images/RNAlogobot.gif"
+						 usemap="#RNAlogobot.gif"
+ 						style="border: 0px solid ; width: 820px; height: 60px;"> <map
+ 						name="RNAlogobot.gif">
+						<area shape="RECT" alt="Evolutionary Biology Group, Oxford"
+ 						coords="0,0,190,60" href="http://evolve.zoo.ox.ac.uk">
+						<area shape="RECT" alt="SANBI, Cape Town"
+ 						coords="222,0,400,60" href="http://www.sanbi.ac.za"> 						
+						<area shape="RECT" alt="Bioinformatics Institute, Auckland"
+ 						coords="430,0,590,60" href="http://www.cebl.auckland.ac.nz">
+						<area shape="RECT" alt="Institute of Evolutionary Biology, Edinburgh"
+ 						coords="605,0,820,60" href="http://tree.bio.ed.ac.uk/">
+						</map>
 							</td>
 						</tr>
 					</table>
@@ -148,6 +178,28 @@
 		');
 	}
 	
+		function drawFooterFirstPage($author) {
+		echo('<br>
+		<table class="box" width="100%" cellspacing="0" cellpadding="0">
+			<tr><td class="box-top"></td></tr>
+			<tr>
+				<td class="page-bottom" valign="top">
+					<table width="800" cellspacing="0" cellpadding="0">
+						<tr>
+							<td>
+								<br><div class="box-extra" align="center">
+									<table width="800" cellspacing="0" cellpadding="0" BGCOLOR="#FFFFFF" align="center"><tr><td><center>For questions, suggestions or problems please contact:<a href="http://evolve.zoo.ox.ac.uk/people.html?id=belshawr"> Robert Belshaw</a><br>Developed by ' . $author . '<br>Page layout last updated ' . date("d F Y ", getlastmod()) . 								
+									'</center></td></tr><tr><td align="center">Funded by the Wellcome Trust, an EU Marie Curie Fellowship and the Royal Society</td></tr></table></div>
+								
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		');
+	}
+
 	function navigationButton($label, $link, $disabled) {
 		global $root;
 		

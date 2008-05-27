@@ -90,7 +90,7 @@
 	
 		<br><br><p><h1>Or, attempt to align your sequence to our library of '.$num.' RNA viral genomes</h1></p>
 		Paste a single nucleotide sequence below (in any format) and click Run<br>
-		<form action="'.$myURL.'/cgi-bin/BlastAlign.cgi" method="get">
+		<form action="'.$myURL.'/rnavirusdb/cgi-bin/BlastAlign.cgi" method="get">
 		<textarea name="blastseq" rows="6" cols="60"></textarea> <br>
 		<input value="Run" type="submit">
 		</form>
@@ -128,7 +128,7 @@
 		//echo ' old ref start is '.$ref_start.'<br>';
 		//echo ' old ref stop is '.$ref_stop.'<br>';
 		//echo ' seq is '.$sequence.'<br>';
-		$resource = mysql_query("SELECT sequence FROM GenomeAligns WHERE id=\"$segmentID\" ",$db);
+		$resource = mysql_query("SELECT sequence FROM genomealigns WHERE id=\"$segmentID\" ",$db);
 		if ($row = mysql_fetch_array($resource)) { # will only be one entry
 			$seq_as_string = $row[0];
 		}
@@ -165,7 +165,7 @@
 		$temp_file = write_file($name,$seq);
 		//echo 'query slice is in'.$temp_file.'<br>';
 		$ref_output = ""; # will use for all the ref alignments
-		$resource = mysql_query("SELECT id, sequence FROM GenomeAligns WHERE segment_id=\"$segmentID\"",$db);
+		$resource = mysql_query("SELECT id, sequence FROM genomealigns WHERE segment_id=\"$segmentID\"",$db);
 		if ($row = mysql_fetch_array($resource)) {
 			do {
 				$align_sequence = $row["sequence"];
@@ -194,7 +194,7 @@
 		echo '<br><br><h1>Click here to download alignment</h1>
 		<form action="download.php" method="post"><input type="submit" value="Alignment"/><input type="hidden" name="align_query" value="'.$text.'"/></form>
 		';
-		$resource2 = mysql_query("SELECT count(*) FROM GenomeAligns WHERE segment_id=\"$segmentID\"",$db); # see if enough seqs for a tree
+		$resource2 = mysql_query("SELECT count(*) FROM genomealigns WHERE segment_id=\"$segmentID\"",$db); # see if enough seqs for a tree
 		$num_seqs = mysql_result($resource2, 0); //only one cell in field;
 		if ($num_seqs > 1) { // cannot get tree unless > 1 genome seq in database
 			$paup_out = tempnam("/tmp", "PaupOut-"); // create file for paup output
@@ -242,7 +242,7 @@
 
 	function get_name($segmentID) {
 		global $db;
-		$resource = mysql_query("SELECT Viruses.name FROM Segments,Viruses WHERE Segments.id=\"$segmentID\" AND Segments.virus_id = Viruses.id",$db);
+		$resource = mysql_query("SELECT viruses.name FROM Segments,viruses WHERE Segments.id=\"$segmentID\" AND Segments.virus_id = viruses.id",$db);
 		if ($sequence = mysql_fetch_array($resource)) { # will only be one entry
 			$name = $sequence[0];
 		}
@@ -254,7 +254,7 @@
 	
 	function get_num_aligns($segmentID) {
 		global $db;
-		$resource = mysql_query("SELECT COUNT(*) FROM GenomeAligns WHERE segment_id=\"$segmentID\" AND divergence < 0.33 AND divergence IS NOT NULL",$db);
+		$resource = mysql_query("SELECT COUNT(*) FROM genomealigns WHERE segment_id=\"$segmentID\" AND divergence < 0.33 AND divergence IS NOT NULL",$db);
 		if ($sequence = mysql_fetch_array($resource)) { # will only be one entry
 			$number = $sequence[0];
 		}
@@ -277,12 +277,12 @@
  
  		$tgf = file_get_contents($tgfFile);
 	  	$tgf = str_replace('\width{150}' ,'\width{180}', $tgf);
-	 	$tgf = str_replace('\height{250}' ,'\height{270}', $tgf);
+	 	$tgf = str_replace('\height{250}' ,'\height{240}', $tgf);
  		$tgf = str_replace('\margin{0}{0}{0}{0}' ,'\margin{10}{10}{10}{10}', $tgf);
 		$tgf = preg_replace("/style{r}{plain}{[^}]+}/", "style{r}{plain}{10}", $tgf);
  		file_put_contents($tgfFile, $tgf);
 		exec ("($TGF -p $tgfFile)");
-  		exec ("($PS2PDF $epsFile)");
+  		exec ("($PS2PDF $epsFile $pdfFile)");
  	 	exec ("(cp $pdfFile ".ABSPATH."tmp/)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
   	 	return $pdfFile;
     	}

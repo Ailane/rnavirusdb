@@ -21,13 +21,13 @@
 
 	openDocument($title);
 
-	drawHeader();
+	drawHeaderFirstPage();
 	draw_toolbar();
 	
 	echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">CAUTION: Pre-publication version. All suggestions and reports of problems will be gratefully received</table>';
 	
 	
-	echo' <TABLE WIDTH="800px"><tbody><TR><TD><img alt="" src="images/logotree.png"
+	echo' <TABLE WIDTH="800px"><tbody><TR><TD><br><img alt="" src="images/logotree.png"
 style="width: 450px; height: 450px;" usemap="#logotree.png" border="0">&nbsp;
                   <map name="logotree.png">
                   <area shape="RECT" alt="Align"
@@ -41,7 +41,7 @@ coords="340,231,402,278" href="viruslinks.php">
                   <area shape="RECT" alt="Proteins"
 coords="135,237,213,380" href="proteins.php"></TD>';
 	
-	echo '<TD><br><br><h2>The RNA Virus Homepage</h2><br>
+	echo '<TD><h2>The RNA Virus Homepage</h2><br>
 	
 	<a href="blast.php"><h1>BLAST</h1></a>
 	Identify your viral nucleotide or amino acid sequences<br><br>
@@ -56,12 +56,12 @@ coords="135,237,213,380" href="proteins.php"></TD>';
 	Get amino acid sequences for viral genes and whole translated genomes for all viral species<br><br>
 	
 	<a href="viruslinks.php"><h1>Links</h1></a>
-	Links to other virus web sites<br>
+	Links to other virus web sites
 	</TD></TR></tbody></TABLE>
 	</dl>
 	';
 
-	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
+	drawFooterFirstPage("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
 	
 	closeDocument();
 	

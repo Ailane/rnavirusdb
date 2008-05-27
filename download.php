@@ -24,10 +24,12 @@
 	$tree_query = $_GET[tree_query];
 	$tree_pdf = $_GET[tree_pdf];
 	$align_query = $_POST[align_query];
+	$tree_figtree = $_GET[tree_figtree];
+	
 
 	
 	if ($query) {
-		$resource = mysql_query("SELECT * FROM GenomeAligns WHERE segment_id=\"$query\" AND divergence < 0.33",$db);
+		$resource = mysql_query("SELECT * FROM genomealigns WHERE segment_id=\"$query\" AND divergence < 0.33",$db);
 		if ($sequence = mysql_fetch_array($resource)) {
 			do {
 				$id = $sequence["id"];
@@ -56,6 +58,30 @@
 	elseif ($align_query) {
 		echo $align_query;
 	}
+	
+	elseif ($tree_figtree) {
+		$resource = mysql_query("SELECT tree FROM Segments WHERE id=\"$tree_query\"",$db);
+		if ($sequence = mysql_fetch_array($resource)) {
+			$tree = $sequence["tree"];
+			echo "$tree";
+			
+  		echo '<applet'
+    	 . ' code="figtree.applet.FigTreeApplet"'
+   		 . ' archive="' . $FIGTREEURL . '"'
+     	 . ' width="500" height="600">'
+     	 . '<param name="tree" value="' . $treeurl .'" />'
+     	 . '<param name="style" value="icarus_small" />'
+     	 . 'Browser does not support Java</applet>';
+
+			
+			
+			
+		}
+		else {
+			echo 'problem with recovering tree';
+		}
+	}
+	
 
 
 ?>

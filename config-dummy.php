@@ -29,6 +29,7 @@ $TGF = "";
 $PS2PDF ="";
 $PAUPpath  = "";
 $myURL = "http://";
+$FIGTREEURL ="http://";
 
 $table_prefix  = 'rv_';   // example: 'rv_' or 'b2' or 'mylogin_'
 
