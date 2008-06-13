@@ -29,9 +29,9 @@
 //$virustotal = mysql_query("SELECT COUNT(*) FROM viruses",$db);
 //	return $virustotal;
     
-    $number_aligns = get_Total();
+    $number_viruses = get_Total();
 
-	echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">Current database have '. $number_aligns.' viruses. Acess the database in the mirrors in <a href="http://virus.zoo.ox.ac.uk/virus/">Oxford</a>, <a href="http://hivweb.sanbi.ac.za/rnavirusdb/">Cape Town</a>,<a href=""> Auckland</a>, and  <a href="http://tree.bio.ed.ac.uk/rnavirusdb/">Edinburgh</a> .
+	echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">Current database have '. $number_viruses.' viruses. Acess the database in the mirrors in <a href="http://virus.zoo.ox.ac.uk/virus/">Oxford</a>, <a href="http://hivweb.sanbi.ac.za/rnavirusdb/">Cape Town</a>,<a href=""> Auckland</a>, and  <a href="http://tree.bio.ed.ac.uk/rnavirusdb/">Edinburgh</a> .
 	</table>';
 	
 	
@@ -89,8 +89,8 @@ coords="135,237,213,380" href="proteins.php"></TD>';
 	function get_Total() {
 		global $db;
 		$resource = mysql_query("SELECT COUNT(*) FROM viruses",$db);
-		$number_aligns = mysql_result($resource, 0); // only one cell in field
-		return $number_aligns;
+		$number_viruses = mysql_result($resource, 0); // only one cell in field
+		return $number_viruses;
 	}
 
 ?>
