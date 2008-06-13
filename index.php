@@ -23,8 +23,16 @@
 
 	drawHeaderFirstPage();
 	draw_toolbar();
+	get_Total();
 	
-	echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">CAUTION: Pre-publication version. All suggestions and reports of problems will be gratefully received</table>';
+
+//$virustotal = mysql_query("SELECT COUNT(*) FROM viruses",$db);
+//	return $virustotal;
+    
+    $number_aligns = get_Total();
+
+	echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">Current database have '. $number_aligns.' viruses. Acess the database in the mirrors in <a href="http://virus.zoo.ox.ac.uk/virus/">Oxford</a>, <a href="http://hivweb.sanbi.ac.za/rnavirusdb/">Cape Town</a>,<a href=""> Auckland</a>, and  <a href="http://tree.bio.ed.ac.uk/rnavirusdb/">Edinburgh</a> .
+	</table>';
 	
 	
 	echo' <TABLE WIDTH="800px"><tbody><TR><TD><br><img alt="" src="images/logotree.png"
@@ -76,6 +84,13 @@ coords="135,237,213,380" href="proteins.php"></TD>';
 		echo "<td><a href='proteins.php''>Proteins</a></td>";
 		echo "<td><a href='aboutus.php''>About us</a></td>";
 		echo "</tr></table>";
+	}
+	
+	function get_Total() {
+		global $db;
+		$resource = mysql_query("SELECT COUNT(*) FROM viruses",$db);
+		$number_aligns = mysql_result($resource, 0); // only one cell in field
+		return $number_aligns;
 	}
 
 ?>
