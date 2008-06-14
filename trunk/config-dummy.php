@@ -12,14 +12,8 @@
   License.
   ***************/
 // **  You need to copy config-dummy.php to config.php and edit in proper values for the database and paths to the executables ** //
-// ** MySQL settings ** //
 
-define('DB_NAME', '');     // The name of the database
-define('DB_USER', '');     // Your MySQL username
-define('DB_PASSWORD', ''); // ...and password
-define('DB_HOST', '');
-
-// ** Paths to Executables ** //
+// ** Paths to Executables and your computer's URL ** //
 
 $blastallpath = "";
 $formatdbpath = "";
@@ -28,15 +22,24 @@ $readseqpath = "";
 $TGF = "";
 $PS2PDF ="";
 $PAUPpath  = "";
-$myURL = "http://";
-$FIGTREEURL ="http://";
+$serverURL = "http://............../"; # e.g. "http://MyComputerName.InstituteCode.ac.uk/";
+
+// MySQL settings. You should not need to change these if you follow the instructions on the README//
+
+define('DB_NAME', 'rnavirusdb');     // The name of the database
+define('DB_USER', 'webuser');     // Your MySQL username
+define('DB_PASSWORD', ''); // ...and password
+define('DB_HOST', 'localhost');
+
+// No more editing (other addresses will be adjusted here automatically) //
+$myURL = $serverURL."rnavirusdb/";
+$FIGTREEURL = $serverURL."rnavirusdb/lib/figtreeapplet.jar";
+$BlastAlignURL = $serverURL."cgi-bin/BlastAlign.cgi"; # Only used in one option. You need to copy the version in the download to your cgi executables directory and make sure it is executable by all
 
 $table_prefix  = 'rv_';   // example: 'rv_' or 'b2' or 'mylogin_'
 
 // Google Analytics Tracker ID to use for this site
 define('GOOGLE_TRACKER_ID', 'UA-EXAMPLE-NUM');  // Your Google Analytics tracker code
-/* Stop editing */
-
 define('ABSPATH', dirname(__FILE__).'/');
 require_once(ABSPATH.'rv-settings.php');
 ?>

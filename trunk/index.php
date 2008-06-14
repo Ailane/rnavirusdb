@@ -28,26 +28,20 @@
 
 //$virustotal = mysql_query("SELECT COUNT(*) FROM viruses",$db);
 //	return $virustotal;
-    
     $number_viruses = get_Total();
 
-	echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">Current database have '. $number_viruses.' viruses. Acess the database in the mirrors in <a href="http://virus.zoo.ox.ac.uk/virus/">Oxford</a>, <a href="http://hivweb.sanbi.ac.za/rnavirusdb/">Cape Town</a>,<a href=""> Auckland</a>, and  <a href="http://tree.bio.ed.ac.uk/rnavirusdb/">Edinburgh</a> .
+	echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">The database currently has '. $number_viruses.' viruses. Mirrors available at <a href="http://virus.zoo.ox.ac.uk/rnavirusdb/"><b>Oxford</b></a>, <a href="http://hivweb.sanbi.ac.za/rnavirusdb/"><b>Cape Town</b></a>,<a href="http://bioinf.cs.auckland.ac.nz/virus/"> <b>Auckland</b></a>, and  <a href="http://tree.bio.ed.ac.uk/rnavirusdb/"><b>Edinburgh</b></a>
 	</table>';
 	
 	
-	echo' <TABLE WIDTH="800px"><tbody><TR><TD><br><img alt="" src="images/logotree.png"
+	echo'<TABLE WIDTH="800px"><tbody><TR><TD><br><img src="images/logotree.png"
 style="width: 450px; height: 450px;" usemap="#logotree.png" border="0">&nbsp;
                   <map name="logotree.png">
-                  <area shape="RECT" alt="Align"
-coords="66,106,130,145" href="align.php">
-                  <area shape="RECT" alt="BLAST 701 Virus"
-coords="169,18,234,68" href="blast.php">
-                  <area shape="RECT" alt="Browse and Search"
-coords="291,68,369,118" href="browse.php">
-                  <area shape="RECT" alt="Links to other resources"
-coords="340,231,402,278" href="viruslinks.php">
-                  <area shape="RECT" alt="Proteins"
-coords="135,237,213,380" href="proteins.php"></TD>';
+                  <area shape="RECT" coords="66,106,130,145" href="align.php">
+                  <area shape="RECT" coords="169,18,234,68" href="blast.php">
+                  <area shape="RECT" coords="291,68,369,118" href="browse.php">
+                  <area shape="RECT" coords="340,231,402,278" href="viruslinks.php">
+                  <area shape="RECT" coords="135,237,213,380" href="proteins.php"></TD>';
 	
 	echo '<TD><h2>The RNA Virus Homepage</h2><br>
 	

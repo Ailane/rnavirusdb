@@ -18,7 +18,9 @@
 	mysql_select_db("$database",$db);
 
 	$virusID = $_GET['id'];
-	$query = $_GET['query'];	
+	$query = $_GET['query'];
+	$segID = $_GET['segmentID'];
+	
 
 	if ($virusID) {
 		$result = mysql_query("SELECT * FROM viruses WHERE id=\"$virusID\"",$db);	
@@ -72,16 +74,17 @@
  		}
  		echo "</TABLE>";
 		
-		$result = mysql_query("SELECT * FROM Segments WHERE virus_id=\"$virusID\" ORDER BY name ASC",$db);
+		$result = mysql_query("SELECT * FROM segments WHERE virus_id=\"$virusID\" ORDER BY name ASC",$db);
 		if ($segment = mysql_fetch_array($result)) {
 			echo '<br><h1>Aligned complete genomes</h1>';
 			echo "<TABLE CLASS='data' WIDTH='700px'>";
 			echo '<TR CLASS="heading"><TD>Segment name</TD>
 			<TD>Number of sequences</TD>
+			<TD>FigTree Applet</TD>
 			<TD>Alignment to screen</TD>
 			<TD>Download alignment</TD>
-			<TD>Download tree file</TD>
-			<TD>Tree to screen</TD>
+			<TD>Download tree file (Nexus)</TD>
+			<TD>Tree to screen (pdf)</TD>
 			<TD>Align your sequence</TD></TR>';
 
 			do {
@@ -93,7 +96,8 @@
 				
 				$number_aligns = getAlignments($segment["id"]);
 				$pdfFile = getTreePDF($segmentID, $TGF, $PS2PDF);
-					
+			
+			
 				if ($pdfFile) {
 					$symbol = "Tree";
 				}
@@ -102,6 +106,7 @@
 				}
 				echo '<TR><TD>'.$segmentName. '</TD>
 				<TD><center>'. $number_aligns. '</center></TD>
+				<TD><a href="figtree.php?id='.$virusID.'&segmentID='.$segmentID.'"/><input type="submit" value="Tree"/></form></TD>
 				<TD><form action="virus.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="Screen"/></form></TD>
 				<TD><form action="download.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="File"/></form></TD>
 				<TD><form action="download.php" method="get"><input type="hidden" name="tree_query" value="'.$segmentID.'"/><input type="submit" value="'.$symbol.'"/></form></TD>
@@ -114,10 +119,12 @@
 		else {
 			echo '<dt>No segments found for this virus</dt><dd></dd>';
 		}
-		genome_overview($virusID);
-		echo '<br><h1>Tree of Reference Sequences </h1>';
-		$figFile = getFigTree($segmentID, $FIGTREEURL, $ABSPATH, $myURL);
 
+		
+		
+		genome_overview($virusID);
+	
+	
 	}
 	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
 	closeDocument();
@@ -144,7 +151,7 @@
 	function genome_overview($virusID) {
 		global $db;
 		
-		$resource = mysql_query("SELECT id, length, name FROM Segments WHERE virus_id=\"$virusID\"",$db);
+		$resource = mysql_query("SELECT id, length, name FROM segments WHERE virus_id=\"$virusID\"",$db);
 		
 		echo '<br><h1> Genome Overview</h1>
 		Click on segment or component genes to go to GenBank entry';
@@ -215,14 +222,14 @@
 
 	function getAlignments($segmentID) {
 		global $db;
-		$resource = mysql_query("SELECT COUNT(*) FROM genomealigns WHERE segment_id=\"$segmentID\" and divergence < 0.33",$db);
+		$resource = mysql_query("SELECT COUNT(*) FROM genomealigns WHERE segment_id=\"$segmentID\"",$db);
 		$number_aligns = mysql_result($resource, 0); // only one cell in field
 		return $number_aligns;
 	}
 
 	function get_link($name) {
 		global $db;
-		$resource = mysql_query("SELECT link FROM ICTVlinks WHERE name=\"$name\"",$db);
+		$resource = mysql_query("SELECT link FROM ictvlinks WHERE name=\"$name\"",$db);
 		if ($row = mysql_fetch_array($resource)) {
 			do {
 				$link = $row["link"];
@@ -332,7 +339,7 @@
 	// Tree construction
 	function getTreePDF($segmentID, $TGF, $PS2PDF) {
 		global $db;
-		$resource = mysql_query("SELECT tree FROM Segments WHERE id=\"$segmentID\"",$db);	
+		$resource = mysql_query("SELECT tree FROM segments WHERE id=\"$segmentID\"",$db);	
 		$tree = mysql_result($resource, 0); // only one cell in field
 		if ($tree) { # tree will not be there if fewer than 3 aligned sequences
 			
@@ -373,48 +380,6 @@
     	}
 
 //
-// Function FigTree Applet
-// Tree construction
-	function getFigTree($segmentID, $FIGTREEURL, $ABSPATH, $myURL) {
-		global $db;
-		$resource = mysql_query("SELECT tree FROM Segments WHERE id=\"$segmentID\"",$db);	
-		$tree = mysql_result($resource, 0); // only one cell in field
-		if ($tree) { # tree will not be there if fewer than 3 aligned sequences
-			
-			$treefile = tempnam("/tmp", "arvore"); # use relative path to tmp folder
-			$treefile = $treefile.".tre";
-			$handle = fopen($treefile, "w");
-			if ($handle) {
-				if (fwrite($handle, "$tree") == TRUE) {
-				}
-				else {
-					echo "<br>WebServer Error: cannot write treefile<br>";
-				}
-			}
-			else {
-				echo "<br>WebServer Error: no handle created for treefile<br>";
-			}
-			
-
-    	 	exec ("(cp $treefile ".ABSPATH."tmp/)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
-
-			  $treeurl = $myURL.$treefile ;
-
-  		echo '<applet'
-    	 . ' code="figtree.applet.FigTreeApplet"'
-   		 . ' archive="' . $FIGTREEURL . '"'
-     	 . ' width="500" height="600">'
-     	 . '<param name="tree" value="' . $treeurl .'" />'
-     	 . '<param name="style" value="icarus_small" />'
-     	 . 'Browser does not support Java</applet>';
-
-  	 	}
-	 	else {
-	 		$treefile = FALSE; # There is no pdf file
-	 	}
-	 	return $treefile;
-    	}	
-
 
 	function see_if_genotype_tool($virus) {
 		global $db;
@@ -426,7 +391,7 @@
 	function show_alignments($query) {
 		global $db;
 		if ($query) {
-			$resource = mysql_query("SELECT * FROM genomealigns WHERE segment_id=\"$query\" AND divergence < 0.33",$db); # Exclude some highly divergent seqs that do not align
+			$resource = mysql_query("SELECT * FROM genomealigns WHERE segment_id=\"$query\"",$db); # Exclude some highly divergent seqs that do not align
 			if ($sequence = mysql_fetch_array($resource)) {
 				do {
 					$id = $sequence["id"];
