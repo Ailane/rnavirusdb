@@ -90,7 +90,7 @@
 	
 		<br><br><p><h1>Or, attempt to align your sequence to our library of '.$num.' RNA viral genomes</h1></p>
 		Paste a single nucleotide sequence below (in any format) and click Run<br>
-		<form action="'.$myURL.'/rnavirusdb/cgi-bin/BlastAlign.cgi" method="get">
+		<form action="'.$BlastAlignURL.'" method="get">
 		<textarea name="blastseq" rows="6" cols="60"></textarea> <br>
 		<input value="Run" type="submit">
 		</form>
@@ -211,7 +211,7 @@
 			exec("$PAUPpath $clustal_out_nexus < $command_file");
 			$pdfFile = getTreePDF($paup_out);
 			echo '<br><br><h1>Click here to download phylogentic tree of alignment</h1>
-			<a href="'.$myURL.'rnavirusdb'.$pdfFile.'"><input type="submit" value="Tree"/></a>';
+			<a href="'.$myURL.$pdfFile.'"><input type="submit" value="Tree"/></a>';
 		}
 	}
 	

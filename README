@@ -2,19 +2,21 @@ PLEASE ENSURE EVERYING IS WITHIN DIRECTORY CALLED rnavirusdb IN YOUR
 /library/webserver/documents AND THEN FOLLOW POINTS 1 TO 4 BELOW
 
 ** 1 ** Load MySQL database (see http://www.mysql.com/) from enclosed dump with 
+shell prompt: gunzip rnavirusdb_dump.gz
 shell prompt: mysql -u root
 mysql prompt: create database rnavirusdb;
-shell prompt: sudo mysql rnavirusdb < rnavirusdb_dump_29_04_08
+shell prompt: sudo mysql rnavirusdb < rnavirusdb_dump
+mysql prompt: grant select on rnavirusdb.* to webuser@localhost
 
 ** 2 ** The rnavirusdb web site uses some external programs listed below with 
-source. Rename dummy-config.php as config.php and insert the path to these
-programs, and adjust your MySQL settings as required.
+sources. Copy dummy-config.php as config.php and type in the paths to these
+programs where indicated.
 
 ** 3 ** The BlastAlign.cgi in cgi-bin must be copied to your CGI-Executables 
-directory (check executable by all). This script is only called when aligning
-a query to all sequences in the database.
+directory (make executable by all). Note, this script is only called when aligning
+a query to all sequences in the database, so can be ignored.
 
-** 4 ** Check all have write plus execute permissions on rnavirusdb/tmp 
+** 4 ** Give all write plus execute permissions on rnavirusdb/tmp 
 
 TreeGraph (tgf) tgf10rc4.zip
 http://www.math.uni-bonn.de/people/jmueller/extra/treegraph/

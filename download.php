@@ -29,7 +29,7 @@
 
 	
 	if ($query) {
-		$resource = mysql_query("SELECT * FROM genomealigns WHERE segment_id=\"$query\" AND divergence < 0.33",$db);
+		$resource = mysql_query("SELECT * FROM genomealigns WHERE segment_id=\"$query\"",$db);
 		if ($sequence = mysql_fetch_array($resource)) {
 			do {
 				$id = $sequence["id"];
