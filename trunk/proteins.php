@@ -152,7 +152,7 @@
 		else {
 			echo 'No virus selected<br>';
 		}
-		if ($sequence = mysql_fetch_array($resource)) {
+		if ($resource && ($sequence = mysql_fetch_array($resource))) {
 			echo '<br><br>Amino acids sequence are:<br>';	
 			do {
 				$temp_array = preg_split("/;/", $sequence[0]);
