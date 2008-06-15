@@ -227,7 +227,7 @@
 
 	function get_segment_name($segmentID) {
 		global $db;
-		$resource = mysql_query("SELECT name FROM Segments WHERE id=\"$segmentID\" ",$db);
+		$resource = mysql_query("SELECT name FROM segments WHERE id=\"$segmentID\" ",$db);
 		if ($sequence = mysql_fetch_array($resource)) { # will only be one entry
 			$segment_name = $sequence[0];
 		}
@@ -242,7 +242,7 @@
 
 	function get_name($segmentID) {
 		global $db;
-		$resource = mysql_query("SELECT viruses.name FROM Segments,viruses WHERE Segments.id=\"$segmentID\" AND Segments.virus_id = viruses.id",$db);
+		$resource = mysql_query("SELECT viruses.name FROM segments,viruses WHERE segments.id=\"$segmentID\" AND segments.virus_id = viruses.id",$db);
 		if ($sequence = mysql_fetch_array($resource)) { # will only be one entry
 			$name = $sequence[0];
 		}
@@ -352,7 +352,7 @@
 	
 	function write_ref_genome($segmentID) {
 		global $db;
-		$resource = mysql_query("SELECT nuc_sequence FROM Segments WHERE id=\"$segmentID\" ",$db);
+		$resource = mysql_query("SELECT nuc_sequence FROM segments WHERE id=\"$segmentID\" ",$db);
 		if ($sequence = mysql_fetch_array($resource)) { # will only be one entry
 			$sequence = $sequence[0];
 		}

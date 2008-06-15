@@ -36,7 +36,7 @@
 	// sub-routine
 
 	function get_link($query ) {
-		$resource = mysql_query("SELECT link FROM ICTVlinks WHERE name=\"$query\"",$db);
+		$resource = mysql_query("SELECT link FROM ictvlinks WHERE name=\"$query\"",$db);
 		if ($row = mysql_fetch_array($resource)) {
 			do {
 				$link = $row["link"];

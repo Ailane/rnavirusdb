@@ -43,7 +43,7 @@
 	}
 	
 	elseif ($tree_query) {
-		$resource = mysql_query("SELECT tree FROM Segments WHERE id=\"$tree_query\"",$db);
+		$resource = mysql_query("SELECT tree FROM segments WHERE id=\"$tree_query\"",$db);
 		if ($sequence = mysql_fetch_array($resource)) {
 			$tree = $sequence["tree"];
 			echo "$tree";
@@ -60,7 +60,7 @@
 	}
 	
 	elseif ($tree_figtree) {
-		$resource = mysql_query("SELECT tree FROM Segments WHERE id=\"$tree_query\"",$db);
+		$resource = mysql_query("SELECT tree FROM segments WHERE id=\"$tree_query\"",$db);
 		if ($sequence = mysql_fetch_array($resource)) {
 			$tree = $sequence["tree"];
 			echo "$tree";
