@@ -4,20 +4,24 @@ use strict;
 use lib (".");
 use CGI ":standard";
 
+# EDIT this to be the absolute path of the web site directory no trailing /
+my $website_dir = "/Library/WebServer/Documents/rnavirusdb";   # typical value on Mac OS X
+# my $website_dir = "/var/www/rnavirusdb";   # typical value on linux
+
 my $logFile = "run.log";
 
 # Create job directory and copy some files
 my $jobname = $$;
 my $dir_for_analysis = "/tmp/BlastAlign_dir-$jobname";
-my $dir_for_final_aligns = "/Library/WebServer/Documents/rnavirusdb/tmp";
+my $dir_for_final_aligns = "$website_dir/tmp";
 
 mkdir $dir_for_analysis;
 
-system "cp ../Documents/rnavirusdb/cgi-bin/BlastAlign $dir_for_analysis";
-system "cp ../Documents/rnavirusdb/cgi-bin/BlastAlign.py $dir_for_analysis";
-system "cp ../Documents/rnavirusdb/cgi-bin/blastall $dir_for_analysis";
-system "cp ../Documents/rnavirusdb/cgi-bin/formatdb $dir_for_analysis";
-system "cp ../Documents/rnavirusdb/cgi-bin/nuc_library.lib $dir_for_analysis";
+system "cp $website_dir/cgi-bin/BlastAlign $dir_for_analysis";
+system "cp $website_dir/cgi-bin/BlastAlign.py $dir_for_analysis";
+system "cp $website_dir/cgi-bin/blastall $dir_for_analysis";
+system "cp $website_dir/cgi-bin/formatdb $dir_for_analysis";
+system "cp $website_dir/cgi-bin/nuc_library.lib $dir_for_analysis";
 
 chdir $dir_for_analysis; # move into tmp directory
 
