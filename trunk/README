@@ -14,7 +14,9 @@ programs where indicated.
 
 ** 3 ** The BlastAlign.cgi in cgi-bin must be copied to your CGI-Executables 
 directory (make executable by all). Note, this script is only called when aligning
-a query to all sequences in the database, so can be ignored.
+a query to all sequences in the database, so can be ignored. Note the line near the
+beginning of BlastAlign.cgi that must be edited to set $website_dir to the absolute
+path of the web site's navirusdb directory.
 
 ** 4 ** Give all write plus execute permissions on rnavirusdb/tmp 
 
