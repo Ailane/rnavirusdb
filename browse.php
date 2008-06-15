@@ -108,7 +108,7 @@
 
 	function get_link($id) {
 		global $db;
-		$resource = mysql_query("SELECT link FROM ICTVlinks WHERE name=\"$id\"",$db);
+		$resource = mysql_query("SELECT link FROM ictvlinks WHERE name=\"$id\"",$db);
 		if ($row = mysql_fetch_array($resource)) {
 			do {
 				$link = $row["link"];
@@ -128,7 +128,7 @@
 			$search = "WHERE type=\"$typeID\" ";
 		}
 		
-		$result = mysql_query("SELECT DISTINCT family FROM Viruses $search ORDER BY family ASC", $db);	
+		$result = mysql_query("SELECT DISTINCT family FROM viruses $search ORDER BY family ASC", $db);	
 		if ($family = mysql_fetch_array($result)) {
 			echo '<dl>';
 			do {
@@ -197,7 +197,7 @@
 			$search = $search."family=\"$familyID\" ";
 		}
 		
-		$result = mysql_query("SELECT DISTINCT genus FROM Viruses $search ORDER BY genus ASC", $db);	
+		$result = mysql_query("SELECT DISTINCT genus FROM viruses $search ORDER BY genus ASC", $db);	
 				
 		if ($genus = mysql_fetch_array($result)) {
 			echo '<dl>';
@@ -282,7 +282,7 @@
 			$search = $search."genus=\"$genusID\" ";
 		}
 		
-		$result = mysql_query("SELECT * FROM Viruses $search ORDER BY name ASC",$db);	
+		$result = mysql_query("SELECT * FROM viruses $search ORDER BY name ASC",$db);	
 	
 		if ($virus = mysql_fetch_array($result)) {
 			echo '<dl>';

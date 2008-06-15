@@ -53,7 +53,7 @@
 		echo '<br><h1>'.$virus["name"].'</h1>';
 		echo '<br><h1> Click below to see details of the proteins in this virus</h1>';
 					
-		$result = mysql_query("SELECT * FROM Segments WHERE virus_id=\"$virusID\" ORDER BY name ASC",$db);
+		$result = mysql_query("SELECT * FROM segments WHERE virus_id=\"$virusID\" ORDER BY name ASC",$db);
 		if ($segment = mysql_fetch_array($result)) {
 			
 			if ($virus["segments"] == 1) {
@@ -138,16 +138,16 @@
 	function get_proteins($choose_function, $choose_virus, $choose_genus, $choose_family, $choose_type) {
 		global $db;
 		if ($choose_virus) {
-			$resource = mysql_query("SELECT Proteins.name, Proteins.aa_seq, Viruses.name FROM Proteins, Viruses WHERE Viruses.id = \"$choose_virus\" AND Proteins.function LIKE \"%$choose_function%\" AND Proteins.virus_id = Viruses.id",$db);
+			$resource = mysql_query("SELECT proteins.name, proteins.aa_seq, viruses.name FROM proteins, viruses WHERE viruses.id = \"$choose_virus\" AND proteins.function LIKE \"%$choose_function%\" AND proteins.virus_id = viruses.id",$db);
 		}
 		elseif ($choose_genus) {
-			$resource = mysql_query("SELECT Proteins.name, Proteins.aa_seq, Viruses.name FROM Proteins, Viruses WHERE Viruses.genus = \"$choose_genus\" AND Proteins.function LIKE \"%$choose_function%\" AND Proteins.virus_id = Viruses.id",$db);
+			$resource = mysql_query("SELECT proteins.name, proteins.aa_seq, viruses.name FROM proteins, viruses WHERE viruses.genus = \"$choose_genus\" AND proteins.function LIKE \"%$choose_function%\" AND proteins.virus_id = viruses.id",$db);
 		}
 		elseif ($choose_family) {
-			$resource = mysql_query("SELECT Proteins.name, Proteins.aa_seq, Viruses.name FROM Proteins, Viruses WHERE Viruses.family = \"$choose_family\" AND Proteins.function LIKE \"%$choose_function%\" AND Proteins.virus_id = Viruses.id",$db);
+			$resource = mysql_query("SELECT proteins.name, proteins.aa_seq, viruses.name FROM proteins, viruses WHERE viruses.family = \"$choose_family\" AND proteins.function LIKE \"%$choose_function%\" AND proteins.virus_id = viruses.id",$db);
 		}
 		elseif ($choose_type) {
-			$resource = mysql_query("SELECT Proteins.name, Proteins.aa_seq, Viruses.name FROM Proteins, Viruses WHERE Viruses.type = \"$choose_type\" AND Proteins.function LIKE \"%$choose_function%\" AND Proteins.virus_id = Viruses.id",$db);
+			$resource = mysql_query("SELECT proteins.name, proteins.aa_seq, viruses.name FROM proteins, viruses WHERE viruses.type = \"$choose_type\" AND proteins.function LIKE \"%$choose_function%\" AND proteins.virus_id = viruses.id",$db);
 		}
 		else {
 			echo 'No virus selected<br>';
@@ -168,7 +168,7 @@
 	function get_trans_genome($trans_genome, $virusID, $name) {
 		global $db;
 		$trans_seq = "";
-		$resource = mysql_query("SELECT $trans_genome FROM Segments WHERE virus_id=\"$virusID\"",$db);
+		$resource = mysql_query("SELECT $trans_genome FROM segments WHERE virus_id=\"$virusID\"",$db);
 		if ($sequence = mysql_fetch_array($resource)) {
 			do {
 				$trans_seq = $trans_seq.$sequence[0];
@@ -193,7 +193,7 @@
 
 		echo '<p>Proteins:</p>';
 
-		$result2 = mysql_query("SELECT * FROM Proteins WHERE segment_id=\"$segmentID\"",$db);
+		$result2 = mysql_query("SELECT * FROM proteins WHERE segment_id=\"$segmentID\"",$db);
 		if ($protein = mysql_fetch_array($result2)) {
 			
 			echo '<dl>';
@@ -218,7 +218,7 @@
 				
 					echo '<dt><i>Coordinates:</i></dt><dd>';
 
-					$result3 = mysql_query("SELECT * FROM Coordinates WHERE protein_id=\"$proteinID\"",$db);
+					$result3 = mysql_query("SELECT * FROM coordinates WHERE protein_id=\"$proteinID\"",$db);
 					if ($coordinate = mysql_fetch_array($result3)) {
 					
 						echo '<ul>';
@@ -259,11 +259,11 @@
 		echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">CAUTION: This page relies currently on a word search of GenBank entries; it has not been verified manually</table>';
 
 		global $db;
-		$names = @mysql_query("SELECT id, name FROM Viruses ORDER BY name ASC",$db);
-		$genera = @mysql_query("SELECT DISTINCT genus FROM Viruses ORDER BY genus ASC",$db);
-		$families = @mysql_query("SELECT DISTINCT family FROM Viruses ORDER BY family ASC",$db);
-		$types = @mysql_query("SELECT DISTINCT type FROM Viruses ORDER BY type ASC",$db);
-		$functions = @mysql_query("SELECT id, name FROM ProteinClassification",$db);
+		$names = @mysql_query("SELECT id, name FROM viruses ORDER BY name ASC",$db);
+		$genera = @mysql_query("SELECT DISTINCT genus FROM viruses ORDER BY genus ASC",$db);
+		$families = @mysql_query("SELECT DISTINCT family FROM viruses ORDER BY family ASC",$db);
+		$types = @mysql_query("SELECT DISTINCT type FROM viruses ORDER BY type ASC",$db);
+		$functions = @mysql_query("SELECT id, name FROM proteinclassification",$db);
 		if (!$names or !$functions or !$genera or !$types or !$families) {
 			echo 'Unable to query database<br>';
 		}
