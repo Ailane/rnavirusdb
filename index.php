@@ -30,11 +30,13 @@
 //	return $virustotal;
     $number_viruses = get_Total();
 
-	echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">The database currently has '. $number_viruses.' viruses. Mirrors available at <a href="http://virus.zoo.ox.ac.uk/rnavirusdb/"><b>Oxford</b></a>, <a href="http://hivweb.sanbi.ac.za/rnavirusdb/"><b>Cape Town</b></a>,<a href="http://bioinf.cs.auckland.ac.nz/rnavirusdb/"> <b>Auckland</b></a>, and  <a href="http://tree.bio.ed.ac.uk/rnavirusdb/"><b>Edinburgh</b></a>
-	</table>';
+	echo '<br>The database currently has '. $number_viruses.
+	'viruses. Mirrors available at <a href="http://virus.zoo.ox.ac.uk/rnavirusdb/"><b>Oxford</b></a>, '.
+	'<a href="http://hivweb.sanbi.ac.za/rnavirusdb/"><b>Cape Town</b></a>, '.
+	'<a href="http://bioinf.cs.auckland.ac.nz/rnavirusdb/"><b>Auckland</b></a>, and '.
+	'<a href="http://tree.bio.ed.ac.uk/rnavirusdb/"><b>Edinburgh</b></a>';
 	
-	
-	echo'<TABLE WIDTH="800px"><tbody><TR><TD><br><img src="images/logotree.png"
+	echo '<TABLE WIDTH="800px"><tbody><TR><TD><br><img src="images/logotree.png"
 style="width: 450px; height: 450px;" usemap="#logotree.png" border="0">&nbsp;
                   <map name="logotree.png">
                   <area shape="RECT" coords="66,106,130,145" href="align.php">
@@ -60,7 +62,6 @@ style="width: 450px; height: 450px;" usemap="#logotree.png" border="0">&nbsp;
 	<a href="viruslinks.php"><h1>Links</h1></a>
 	Links to other virus web sites
 	</TD></TR></tbody></TABLE>
-	</dl>
 	';
 
 	drawFooterFirstPage("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
