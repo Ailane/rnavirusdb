@@ -8,7 +8,7 @@ open OUT2, ">nuc_library_acc.lib"; # for BLAST (accession numbers only)
 close OUT2;
 open OUT2, ">>nuc_library_acc.lib";
 
-$dbh = DBI->connect('DBI:mysql:rnaviruses');
+$dbh = DBI->connect('DBI:mysql:rnavirusdb');
 $statement = "select segments.id, viruses.name, segments.name, segments.nuc_sequence from viruses , segments where (segments.virus_id = viruses.id)"; 
 $sth = $dbh->prepare($statement) or die "Can't prepare $statement: $dbh->errstr\n";	
 $sth->execute or die "Can't execute the query: $sth->errstr\n";
