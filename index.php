@@ -31,7 +31,7 @@
     $number_viruses = get_Total();
 
 	echo '<br>The database currently has '. $number_viruses.
-	'viruses. Mirrors available at <a href="http://virus.zoo.ox.ac.uk/rnavirusdb/"><b>Oxford</b></a>, '.
+	' viruses. Mirrors available at <a href="http://virus.zoo.ox.ac.uk/rnavirusdb/"><b>Oxford</b></a>, '.
 	'<a href="http://hivweb.sanbi.ac.za/rnavirusdb/"><b>Cape Town</b></a>, '.
 	'<a href="http://bioinf.cs.auckland.ac.nz/rnavirusdb/"><b>Auckland</b></a>, and '.
 	'<a href="http://tree.bio.ed.ac.uk/rnavirusdb/"><b>Edinburgh</b></a>';
