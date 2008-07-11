@@ -59,7 +59,14 @@
 		echo '<br><h1 ALIGN=left>'.$name.'</h1>';
 		$genotype = see_if_genotype_tool($virusID);
 		if ($genotype) {
-			echo 'We have a genotyping tool available for this virus: click icon <a href="'.$genotype.'"><img border="0" src="images/logosubtypetools.jpg" width="175" height="30"></a><br><br>';
+			echo 'Useful links: ';
+			$master_list = preg_split ('/\@/', $genotype);
+			foreach ($master_list as $list) {
+				$entry = preg_split ('/\*/', $list);
+				#echo 'address is '.$entry[0].' logo is '.$entry[1].'<br>';
+				echo '<a href="'.$entry[0].'"><img border="0" src="'.$entry[1].'" width="175" height="30"></a>';
+			}
+			echo '<br><br>';
 		}
 		echo "<TABLE CLASS='data' WIDTH='400px'>";
 		echo '<TR><TD CLASS="heading">Type:</TD><TD><a href="browse.php">'.$type.'</a></TD></TR>';
