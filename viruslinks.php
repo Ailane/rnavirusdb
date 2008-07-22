@@ -51,23 +51,21 @@ Identification Resource)</a> (amino acid sequences and others) <br>
 <a href="http://www.rcsb.org/pdb/">PDB (Protein Data Bank)</a>
 (three-dimensional structures of proteins)<br>
 <br>
-<h1>Virus 
-Databases:</h1>
+<h1>General Virus Databases:</h1>
 <a href="http://www.ncbi.nlm.nih.gov/retroviruses/">Retrovirus Resources</a> at NCBI<br>
-<a href="http://www.biovirus.org/index.html">Viral bioinformatics resource</a><br>
-<a href="http://www.dpvweb.net/">Plant Virus Database</a>
-<br>
+<a href="http://www.biovirus.org/index.html">Viral Bioinformatics Resource</a> covers a range of viruses<br>
+<a href="http://www.dpvweb.net/">Plant Virus Database</a><br>
+<a href="http://www.who.int/csr/en/">WHOs EPR </a> - monitoring of epidemics and pandemics<br>
 </td>
-<td width="50%"><h1>HIV
-Databases:</h1>
+<td width="50%"><h1>HIV Databases:</h1>
 <a href="http://hiv-web.lanl.gov/">Los Alamos HIV
 Sequence Database</a>&nbsp; Los Alamos National Laboratory, USA
 <br><a href="http://hivdb.stanford.edu/">Stanford Drug Resistance
 Database&nbsp; - </a>Curated database containing RT and Protease
 sequences for evolutionary and drug resistance studies. 
-<br><a href="http://srdata.nist.gov/hivdb/">HIV Protease Database</a>
+<br><a href="http://mcl1.ncifcrf.gov/hivdb/">HIV Protease Database</a>
 -&nbsp; Structural database maintained at the NCI devoted to HIV and
-SIV protease 
+SIV proteases 
 
 <h1>HCV
 Databases:</h1>
@@ -84,13 +82,11 @@ at DNA database of Japan <br>
 <br>
 <h1>Influenza
 Databases:</h1>
-<a href="http://www.flu.lanl.gov/">Flu Database</a> at Los Alamos<br>
+<a href="http://www.flu.lanl.gov/">Flu Database</a> at Los Alamos (private)<br>
 <a href="http://www.ncbi.nlm.nih.gov/genomes/FLU/FLU.html">Influenza
 Virus Resource</a> at NCBI<br>
-<a href="http://www.eswi.org/" target="_top">European
-Scientific Working Group on Influenza</a> <a
-href="http://rhone.b3e.jussieu.fr/flunet/www/" target="_top">FluNet
-Global Influenza Surveillance Network</a> <br>
+<a href="http://www.eswi.org/">European Scientific Working Group on Influenza</a><br>
+<a href="http://gamapserver.who.int/GlobalAtlas/home.asp">WHOs FluNet</a> <br>
 </td>
 </tr>
 </tbody>
