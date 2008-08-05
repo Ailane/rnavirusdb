@@ -133,8 +133,7 @@
 			echo '<dl>';
 			do {
 				$familyName = $family["family"];
-				if (trim($familyName) == "") $familyName = "Unclassified";
-				
+				#if (trim($familyName) == "") $familyName = "Unclassified";
 				$familyID = $familyName;
 				$id = $familyName;
 				$link = get_link($id);
@@ -176,7 +175,7 @@
 			} while ($family = mysql_fetch_array($result));
 			echo '</dl>';
 		} else {
-			echo "No viruses of that type in the database";	
+			echo "No viruses in the database";	
 		}
 	}
 
@@ -204,7 +203,7 @@
 
 			do {
 				$genusName = $genus["genus"];
-				if ($genusName == "") $genusName = "Unclassified";
+				#if ($genusName == "") $genusName = "Unclassified";
 
 				$genusID = $genusName;
 				$id = $genusName;
@@ -253,7 +252,7 @@
 			} while ($genus = mysql_fetch_array($result));
 			echo '</dl>';
 		} else {
-			echo "No viruses of that family in the database";	
+			echo "No viruses in the database";	
 		}
 	}
 
@@ -297,7 +296,7 @@
 			} while ($virus = mysql_fetch_array($result));
 			echo '</dl>';
 		} else {
-			echo "No viruses of that genus in the database";	
+			echo "No viruses in the database";	
 		}
 
 	}
