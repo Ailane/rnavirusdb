@@ -87,11 +87,11 @@
 			echo "<TABLE CLASS='data' WIDTH='700px'>";
 			echo '<TR CLASS="heading"><TD>Segment name</TD>
 			<TD>Number of sequences</TD>
-			<TD>FigTree Applet</TD>
+			<TD>View Tree (applet)</TD>
+			<TD>View Tree (pdf)</TD>
+			<TD>Download tree (NEXUS)</TD>
 			<TD>Alignment to screen</TD>
 			<TD>Download alignment</TD>
-			<TD>Download tree file (Nexus)</TD>
-			<TD>Tree to screen (pdf)</TD>
 			<TD>Align your sequence</TD></TR>';
 
 			do {
@@ -104,20 +104,21 @@
 				$number_aligns = getAlignments($segment["id"]);
 				$pdfFile = getTreePDF($segmentID, $TGF, $PS2PDF);
 			
-			
-				if ($pdfFile) {
+				if ($number_aligns > 1 && $pdfFile) {
+					$disabled = " ";
 					$symbol = "Tree";
 				}
 				else {
+					$disabled = "disabled ";
 					$symbol = "N/A";
 				}
 				echo '<TR><TD>'.$segmentName. '</TD>
 				<TD><center>'. $number_aligns. '</center></TD>
-				<TD><a href="figtree.php?id='.$virusID.'&segmentID='.$segmentID.'"/><input type="submit" value="Tree"/></form></TD>
+				<TD><a href="figtree.php?id='.$virusID.'&segmentID='.$segmentID.'"/><input '.$disabled.'type="submit" value="'.$symbol.'"/></form></TD>
+				<TD><a href="'.$myURL.$pdfFile.'"><input '.$disabled.'type="submit" value="'.$symbol.'"/></a></TD>
+				<TD><form action="download.php" method="get"><input type="hidden" name="tree_query" value="'.$segmentID.'"/><input '.$disabled.'type="submit" value="'.$symbol.'"/></form></TD>
 				<TD><form action="virus.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="Screen"/></form></TD>
 				<TD><form action="download.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="File"/></form></TD>
-				<TD><form action="download.php" method="get"><input type="hidden" name="tree_query" value="'.$segmentID.'"/><input type="submit" value="'.$symbol.'"/></form></TD>
-				<TD><a href="'.$myURL.$pdfFile.'"><input type="submit" value="'.$symbol.'"/></a></TD>
 				<TD><form action="align.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="Align"/></form></TD></TR>';
 			} while ($segment = mysql_fetch_array($result));
 			echo "</TABLE>";
