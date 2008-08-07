@@ -115,7 +115,7 @@
 				echo '<TR><TD>'.$segmentName. '</TD>
 				<TD><center>'. $number_aligns. '</center></TD>
 				<TD><a href="figtree.php?id='.$virusID.'&segmentID='.$segmentID.'"/><input '.$disabled.'type="submit" value="'.$symbol.'"/></form></TD>
-				<TD><a href="'.$myURL.$pdfFile.'"><input '.$disabled.'type="submit" value="'.$symbol.'"/></a></TD>
+				<TD><a href="'.$myURL.'tmp/'.$pdfFile.'"><input '.$disabled.'type="submit" value="'.$symbol.'"/></a></TD>
 				<TD><form action="download.php" method="get"><input type="hidden" name="tree_query" value="'.$segmentID.'"/><input '.$disabled.'type="submit" value="'.$symbol.'"/></form></TD>
 				<TD><form action="virus.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="Screen"/></form></TD>
 				<TD><form action="download.php" method="get"><input type="hidden" name="query" value="'.$segmentID.'"/><input type="submit" value="File"/></form></TD>
@@ -349,43 +349,50 @@
 		global $db;
 		$resource = mysql_query("SELECT tree FROM segments WHERE id=\"$segmentID\"",$db);	
 		$tree = mysql_result($resource, 0); // only one cell in field
+		
 		if ($tree) { # tree will not be there if fewer than 3 aligned sequences
 			
-			$treefile = tempnam("/tmp", "arvore"); # use relative path to tmp folder
-			$treefile = $treefile.".tre";
-			$handle = fopen($treefile, "w");
-			if ($handle) {
-				if (fwrite($handle, "$tree") == TRUE) {
+			$pdfName = $segmentID . ".pdf";
+			
+			if (!file_exists(ABSPATH."tmp/".$pdfName)) {
+			
+				$treefile = tempnam("/tmp", "arvore"); # use relative path to tmp folder
+				$treefile = $treefile.".tre";
+				$handle = fopen($treefile, "w");
+				if ($handle) {
+					if (fwrite($handle, "$tree") == TRUE) {
+					}
+					else {
+						echo "<br>WebServer Error: cannot write treefile<br>";
+					}
 				}
 				else {
-					echo "<br>WebServer Error: cannot write treefile<br>";
+					echo "<br>WebServer Error: no handle created for treefile<br>";
 				}
-			}
-			else {
-				echo "<br>WebServer Error: no handle created for treefile<br>";
-			}
-			
- 			$pdfFile = str_replace('tre', 'pdf', $treefile);
-   			$tgfFile = str_replace('tre', 'tgf', $treefile);
-    			$epsFile = str_replace('tre', 'eps', $treefile);
-
-    			exec ("($TGF -t $treefile)");
-  
- 			$tgf = file_get_contents($tgfFile);
-  		  	$tgf = str_replace('\width{150}' ,'\width{180}', $tgf);
-  		 	$tgf = str_replace('\height{250}' ,'\height{240}', $tgf);
-  	 		$tgf = str_replace('\margin{0}{0}{0}{0}' ,'\margin{10}{10}{10}{10}', $tgf);
-			$tgf = preg_replace("/style{r}{plain}{[^}]+}/", "style{r}{plain}{10}", $tgf);
- 	 		file_put_contents($tgfFile, $tgf);
-  			exec ("($TGF -p $tgfFile)");
-    		exec ("($PS2PDF $epsFile $pdfFile)");
-    	 	exec ("(cp $pdfFile ".ABSPATH."tmp/)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
-  	 	}
-	 	else {
-	 		$pdfFile = FALSE; # There is no pdf file
+				
+				$pdfFile = str_replace('tre', 'pdf', $treefile);
+				$tgfFile = str_replace('tre', 'tgf', $treefile);
+				$epsFile = str_replace('tre', 'eps', $treefile);
+	
+				exec ("($TGF -t $treefile)");
+	  
+				$tgf = file_get_contents($tgfFile);
+				$tgf = str_replace('\width{150}' ,'\width{180}', $tgf);
+				$tgf = str_replace('\height{250}' ,'\height{240}', $tgf);
+				$tgf = str_replace('\margin{0}{0}{0}{0}' ,'\margin{10}{10}{10}{10}', $tgf);
+				$tgf = preg_replace("/style{r}{plain}{[^}]+}/", "style{r}{plain}{10}", $tgf);
+				file_put_contents($tgfFile, $tgf);
+				exec ("($TGF -p $tgfFile)");
+				exec ("($PS2PDF $epsFile $pdfFile)");
+				exec ("(cp $pdfFile ".ABSPATH."tmp/$pdfName)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
+				
+    	 	} 
+    	 	
+    	 	return $pdfName;
 	 	}
-	 	return $pdfFile;
-    	}
+	 	
+	 	return FALSE; # There is no pdf file
+    }
 
 //
 
