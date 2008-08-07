@@ -42,6 +42,9 @@
 // Tree construction
 	function getFigTree($segID, $FIGTREEURL, $ABSPATH, $myURL) {
 		global $db;
+
+		$treeName = $segID . ".tre";
+
 		$resource = mysql_query("SELECT tree FROM segments WHERE id=\"$segID\"",$db);	
 		$tree = mysql_result($resource, 0); // only one cell in field
 		if ($tree) { # tree will not be there if fewer than 3 aligned sequences
@@ -58,19 +61,22 @@
 		else {
 			echo "<br>WebServer Error: no handle created for treefile<br>";
 		}
-   	 	exec ("(cp $treefile ".ABSPATH."tmp/)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
-		$treeurl = $myURL.$treefile;
+   	 	exec ("(cp $treefile ".ABSPATH."tmp/$treeName)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
+   	 	
+		$treeurl = $myURL."tmp/".$treeName;
 		#echo '<br> tree name is:'.$treeurl.'<br>';
   		echo '<applet'
 		. ' code="figtree.applet.FigTreeApplet"'
 		. ' archive="' . $FIGTREEURL . '"'
-		. ' width="500" height="600">'
+		. ' width="800" height="600">'
 		. '<param name="tree" value="' . $treeurl .'" />'
-		. '<param name="style" value="icarus_small" />'
+		. '<param name="style" value="default" />'
 		. 'Browser does not support Java</applet>';
+		echo '<p><a href="http://tree.bio.ed.ac.uk/software/figtree" target="_blank"><small><i>FigTree applet by Andrew Rambaut, Institute of Evolutionary Biology, University of Edinburgh</i></small></a></p>';
 
   	 	}
-    	}
+    }
+    
  	function draw_toolbar($virusID) {
 		echo "<TABLE CLASS='toolbar' WIDTH='820px'>";
 		echo "<tbody><tr><td><a href='index.php' >Home</a></td>";
