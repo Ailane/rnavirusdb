@@ -19,22 +19,27 @@
 	drawHeader();
 	$virusID = $_GET['id'];
 	$segID = $_GET['segmentID'];
-	
-	draw_toolbar($virusID);
-	$result = mysql_query("SELECT viruses.name, segments.name FROM segments, viruses WHERE (segments.id=\"$segID\" AND viruses.id=\"$virusID\" AND segments.virus_id = viruses.id)",$db);	
-	$row = mysql_fetch_row($result); 
-	$virus_name = $row[0]; 
-	$segment_name = $row[1];  
+	$tree_ID = $_GET['FigTree'];
 
-	if ($segment_name == "monopartite") {
-		echo '<br><h1>Tree of reference genome sequences for '.$virus_name.'</h1><br><br>';
+	if ($tree_ID) {
+		getFigTree_query($tree_ID, $FIGTREEURL, $ABSPATH, $myURL);
 	}
 	else {
-		echo '<br><h1>Tree of reference genome sequences for '.$segment_name.' of '.$virus_name.'</h1><br><br>';
+		draw_toolbar($virusID);
+		$result = mysql_query("SELECT viruses.name, segments.name FROM segments, viruses WHERE (segments.id=\"$segID\" AND viruses.id=\"$virusID\" AND segments.virus_id = viruses.id)",$db);	
+		$row = mysql_fetch_row($result); 
+		$virus_name = $row[0]; 
+		$segment_name = $row[1];  
+
+		if ($segment_name == "monopartite") {
+			echo '<br><h1>Tree of reference genome sequences for '.$virus_name.'</h1><br><br>';
+		}
+		else {
+			echo '<br><h1>Tree of reference genome sequences for '.$segment_name.' of '.$virus_name.'</h1><br><br>';
+		}
+	
+		getFigTree($segID, $FIGTREEURL, $ABSPATH, $myURL);
 	}
-	
-	getFigTree($segID, $FIGTREEURL, $ABSPATH, $myURL);
-	
 	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
 	closeDocument();
 
@@ -64,7 +69,7 @@
    	 	exec ("(cp $treefile ".ABSPATH."tmp/$treeName)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
    	 	
 		$treeurl = $myURL."tmp/".$treeName;
-		#echo '<br> tree name is:'.$treeurl.'<br>';
+		echo '<br> tree name is:'.$treeurl.'<br>';
   		echo '<applet'
 		. ' code="figtree.applet.FigTreeApplet"'
 		. ' archive="' . $FIGTREEURL . '"'
@@ -76,6 +81,21 @@
 
   	 	}
     }
+    
+    	function getFigTree_query($tree_ID, $FIGTREEURL, $ABSPATH, $myURL) {
+		$tree_URL = $myURL.$tree_ID;
+		#echo '<br> paup output is at:'.$tree_ID.' copying to '.$tree_URL.'<br>';
+		exec ("(cp $tree_ID ".ABSPATH."tmp/)");
+  		echo '<applet'
+		. ' code="figtree.applet.FigTreeApplet"'
+		. ' archive="' . $FIGTREEURL . '"'
+		. ' width="800" height="600">'
+		. '<param name="tree" value="' . $tree_URL .'" />'
+		. '<param name="style" value="default" />'
+		. 'Browser does not support Java</applet>';
+		echo '<p><a href="http://tree.bio.ed.ac.uk/software/figtree" target="_blank"><small><i>FigTree applet by Andrew Rambaut, Institute of Evolutionary Biology, University of Edinburgh</i></small></a></p>';
+    }
+
     
  	function draw_toolbar($virusID) {
 		echo "<TABLE CLASS='toolbar' WIDTH='820px'>";

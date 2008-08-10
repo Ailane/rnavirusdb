@@ -71,13 +71,28 @@
 		$number = get_num_aligns($segmentID);
 		echo '<br><br>
 		<p><h1>Attempt to place your sequence into our alignment of '.$number.' genome(s) for '.$name.' ('.$segment_name.')</h1></p>
-		Paste your nucleotide sequence below and click Run<br>
+		Paste your nucleotide sequence below and click Run to build a multiple alignment based on BLAST<br>
+		(This will use the coordinates of an initial BLAST against the species reference sequence to paste your sequence into the alignment.)<br>
+		<br>
 		<form action="align.php" method="post">
 		<textarea name="sequence" rows="6" cols="60"></textarea> 
 		<input type="hidden" name="query2" value="'.$segmentID.'"><br>
 		<input value="Run" type="submit"/>  <input type="reset" value="reset">
 		</form>
 		';
+		if ($number > 2) {
+			echo '<br><br>Or, paste your nucleotide sequence below and click Run to use the BlastAlign program<br><br>
+			<form action="blastalign.php" method="POST">
+			<textarea name="sequence" rows="6" cols="60"></textarea>
+			<input type="hidden" name="id" value="'.$segmentID.'"><br> 
+			<input value="Run" type="submit"/>  <input type="reset" value="reset">
+			</form><br>
+			<br>The above window uses the BlastAlign tool. Click icon for details: 
+			<a href="http://www.bioafrica.net/blast/BlastAlign.html">
+			<img border="0" src="images/blastalign.gif" width="55" height="55">
+			</a>
+			';
+		}
 	}
 	
 	
@@ -210,8 +225,12 @@
 
 			exec("$PAUPpath $clustal_out_nexus < $command_file");
 			$pdfFile = getTreePDF($paup_out);
-			echo '<br><br><h1>Click here to download phylogentic tree of alignment</h1>
+			echo '<br><br><h1>Click here to download phylogenetic tree of alignment as a pdf file</h1>
 			<a href="'.$myURL.$pdfFile.'"><input type="submit" value="Tree"/></a>';
+			#echo 'paup file is at'. $paup_out.'<br>';
+			echo '<br><br><h1>Click here to link to download phylogenetic tree of alignment using FigTree</h1>
+			<form action="figtree.php" method="GET"><input type="submit" value="FigTree"/><input type="hidden" name="FigTree" value="'.$paup_out.'"/></form>
+			';
 		}
 	}
 	
