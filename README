@@ -1,10 +1,16 @@
 PLEASE ENSURE EVERYING IS WITHIN DIRECTORY CALLED rnavirusdb IN YOUR 
 /library/webserver/documents AND THEN FOLLOW POINTS 1 TO 4 BELOW
 
-** 1 ** Create mySQL database (see http://www.mysql.com/) with the following commands
-               AWAITING COMMAND FROM SIDNEY
-               
-** 2 ** Copy dummy-config.php as config.php and type the mySQL details that you
+** 1 ** Install mySQL (see http://www.mysql.com/)
+
+** 2 ** Load Tthe MySQL database from enclosed dump with the following.
+shell prompt: gunzip rnavirusdb_dump.gz
+shell prompt: mysql -h HOSTNAME -u USERNAME -p DATABASENAME < rnavirusdb_dump
+where HOSTNAME, USERNAME, and DATABSENAME are as specified in the 
+config.php file (see below). This command will prompt you to enter the 
+password, which you can also see in the config.php file.
+
+** 3 ** Copy dummy-config.php as config.php and type the mySQL details that you
 used to create your database, e.g.
 
 define('DB_NAME', 'rnavirusdb');     // The name of the database
@@ -12,20 +18,12 @@ define('DB_USER', 'my_username');     // Your MySQL username
 define('DB_PASSWORD', 'my_password'); // ...and password
 define('DB_HOST', 'localhost'); // host name if not localhost
 
-** 3 ** Load MySQL database from enclosed dump with the following.
-shell prompt: gunzip rnavirusdb_dump.gz
-shell prompt: mysql -h HOSTNAME -u USERNAME -p DATABASENAME < rnavirusdb_dump
-	where HOSTNAME, USERNAME, and DATABSENAME are as specified in the 
-	rnavirusdb/config.php file on your own server. This command will prompt you
-	to enter the password, which you can also see in the config.php file.
-	
 ** 4 ** The rnavirusdb web site uses some external programs listed below with 
 sources. Type the paths to these programs into config.php where indicated.
 
-** 5 ** The BlastAlign.cgi in cgi-bin must be copied to your CGI-Executables 
-directory (make executable by all). Note, this script is only called when aligning
-a query to all sequences in the database, so can be ignored. Note the line near the
-beginning of BlastAlign.cgi that must be edited to set $website_dir to the absolute
+** 5 ** BlastAlign.cgi and BlastAlign2.cgi in cgi-bin must be copied to your 
+CGI-Executables directory and made executable by all. Note the line near the
+beginning of this scripts that must be edited to set $website_dir to the absolute
 path of the web site's navirusdb directory.
 
 ** 6 ** Give all write plus execute permissions on rnavirusdb/tmp 
