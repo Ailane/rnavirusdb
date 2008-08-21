@@ -356,8 +356,8 @@
 			
 			if (!file_exists(ABSPATH."tmp/".$pdfName)) {
 			
-				$treefile = tempnam("/tmp", "arvore"); # use relative path to tmp folder
-				$treefile = $treefile.".tre";
+				$tempfile = tempnam("/tmp", "arvore"); # use relative path to tmp folder
+				$treefile = $tempfile.".tre";
 				$handle = fopen($treefile, "w");
 				if ($handle) {
 					if (fwrite($handle, "$tree") == TRUE) {
@@ -370,9 +370,9 @@
 					echo "<br>WebServer Error: no handle created for treefile<br>";
 				}
 				
-				$pdfFile = str_replace('tre', 'pdf', $treefile);
-				$tgfFile = str_replace('tre', 'tgf', $treefile);
-				$epsFile = str_replace('tre', 'eps', $treefile);
+				$pdfFile = $tempfile.".pdf";
+				$tgfFile = $tempfile.".tgf";
+				$epsFile = $tempfile.".eps";
 	
 				exec ("($TGF -t $treefile)");
 	  
@@ -384,7 +384,12 @@
 				file_put_contents($tgfFile, $tgf);
 				exec ("($TGF -p $tgfFile)");
 				exec ("($PS2PDF $epsFile $pdfFile)");
-				exec ("(cp $pdfFile ".ABSPATH."tmp/$pdfName)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
+				exec ("(cp $pdfFile ".ABSPATH."tmp/$pdfName)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it);
+				unlink($treefile);
+				unlink($pdfFile);
+				unlink($tgfFile);
+				unlink($epsFile);
+				unlink($tempfile); # unlink last to avoid a race condition
 				
     	 	} 
     	 	
