@@ -53,8 +53,8 @@
 		$resource = mysql_query("SELECT tree FROM segments WHERE id=\"$segID\"",$db);	
 		$tree = mysql_result($resource, 0); // only one cell in field
 		if ($tree) { # tree will not be there if fewer than 3 aligned sequences
-			$treefile = tempnam("/tmp", "arvore"); # use relative path to tmp folder
-			$treefile = $treefile.".tre";
+			$tempfile = tempnam("/tmp", "arvore"); # use relative path to tmp folder
+			$treefile = $tempfile.".tre";
 			$handle = fopen($treefile, "w");
 			if ($handle) {
 				if (fwrite($handle, "$tree") == TRUE) {
@@ -67,7 +67,8 @@
 			echo "<br>WebServer Error: no handle created for treefile<br>";
 		}
    	 	exec ("(cp $treefile ".ABSPATH."tmp/$treeName)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
-   	 	
+   	 	unlink($treefile);
+		unlink($tempfile);
 		$treeurl = $myURL."tmp/".$treeName;
 		echo '<br> tree name is:'.$treeurl.'<br>';
   		echo '<applet'
