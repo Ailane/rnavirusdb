@@ -23,8 +23,9 @@ sources. Type the paths to these programs into config.php where indicated.
 
 ** 5 ** BlastAlign.cgi and BlastAlign2.cgi in cgi-bin must be copied to your 
 CGI-Executables directory and made executable by all. Note the line near the
-beginning of this scripts that must be edited to set $website_dir to the absolute
-path of the web site's navirusdb directory.
+beginning of these scripts (clines 8-10) that must be edited to set $website_dir 
+and $website_URL to the absolute path of the web site's rnavirusdb directory and
+the URL of the application respectively.
 
 ** 6 ** Give all write plus execute permissions on rnavirusdb/tmp 
 

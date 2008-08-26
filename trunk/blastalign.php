@@ -15,16 +15,18 @@
 	
 	$db = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
 	mysql_select_db($database,$db);
-	$segmentID = $_POST[id];
-	$sequence = $_POST[sequence];
+	$segmentID = $_POST['id'];
+	$sequence = $_POST['sequence'];
 	$title = "Using BlastAlign to align to ".get_name($segmentID); 
 	openDocument($title);
 	drawHeader();
 	draw_toolbar();
 
-	#echo 'query is '. $segmentID.' sequence is '.$sequence.'<br>';
+	#echo '<br>query is '. $segmentID.' sequence is '.$sequence.'</br>';
+	#$sequence=~s/'(>.+?\n)?'//g;
+	$sequence=preg_replace("/>.+?\n/","",$sequence);
 	$lib = make_lib($segmentID, $sequence);
-	#echo 'lib made at '.$lib.'<br>';
+	#echo '<br>lib made at '.$lib.'</br>';
 	echo '<br><br><h1>Have created your libraries. Just click Run to perform the analysis<br></h1>
 	<form action='.$BlastAlignURL2.' method="get"><input type="hidden" name="id" 
 	value="'.$lib.'"/><input type="submit" value="Run"/></form>';
