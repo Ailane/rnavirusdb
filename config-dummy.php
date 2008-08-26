@@ -34,7 +34,8 @@ define('DB_HOST', 'localhost');
 // No more editing (other addresses will be adjusted here automatically) //
 $myURL = $serverURL."rnavirusdb/";
 $FIGTREEURL = $serverURL."rnavirusdb/lib/figtreeapplet.jar";
-$BlastAlignURL = $serverURL."cgi-bin/BlastAlign.cgi"; # Only used in one option. You need to copy the version in the download to your cgi executables directory and make sure it is executable by all
+$BlastAlignURL = $serverURL."cgi-bin/BlastAlign.cgi"; # You need to copy BlastAlign.cgi from the download (rnavirusdb/cgi/) to your cgi executables directory and make sure it is executable by all
+$BlastAlignURL2 = $serverURL."cgi-bin/BlastAlign2.cgi"; # You need to copy BlastAlign2.cgi from the download (rnavirusdb/cgi/) to your cgi executables directory and make sure it is executable by all
 
 $table_prefix  = 'rv_';   // example: 'rv_' or 'b2' or 'mylogin_'
 

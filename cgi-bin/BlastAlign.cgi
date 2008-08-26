@@ -6,14 +6,14 @@ use CGI ":standard";
 
 # EDIT this to be the absolute path of the web site directory no trailing /
 my $website_dir = "/Library/WebServer/Documents/rnavirusdb";   # typical value on Mac OS X
-# my $website_dir = "/var/www/rnavirusdb";   # typical value on linux
-
+#my $website_dir = "/var/www/html/rnavirusdb";   # typical value on linux
+my $website_URL="http://eholmes2.zoo.ox.ac.uk/rnavirusdb";
 my $logFile = "run.log";
 
+my $dir_for_final_aligns = "$website_dir/tmp";
 # Create job directory and copy some files
 my $jobname = $$;
 my $dir_for_analysis = "/tmp/BlastAlign_dir-$jobname";
-my $dir_for_final_aligns = "$website_dir/tmp";
 
 mkdir $dir_for_analysis;
 
@@ -60,6 +60,6 @@ my $command =  "perl BlastAlign -i all_seqs -r user_query -m 0.5";
 	
     print "<p><p><hr><p> The sequences have been aligned !<br>";
     print "<br> The Alignment can be extracted in Phylip or Nexus Format (you may wish to edit the names):<br>";
-    print "<li><a href=\"/rnavirusdb/tmp/PhylipAlign$jobname\">Alignment.phy</a>(Phylip format)<p>";
-    print "<li><a href=\"/rnavirusdb/tmp/NexusAlign$jobname\">Alignment.nxs</a>(Nexus format)<p><hr><p>";
+    print "<li><a href=\"$website_URL/tmp/PhylipAlign$jobname\">Alignment.phy</a>(Phylip format)<p>";
+    print "<li><a href=\"$website_URL/tmp/NexusAlign$jobname\">Alignment.nxs</a>(Nexus format)<p><hr><p>";
     print "<br><br><center> Analysis complete <br><br>";
