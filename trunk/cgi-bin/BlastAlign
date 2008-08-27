@@ -10,9 +10,9 @@ use Getopt::Std; 	# read in data at command line using -i type options
 # BlastAlign Version 1.2 Changes: able to cope with output from NCBI BLASTN version 2.2.14 - thanks to Toby Hunt for spotting this
 
 # Give here location of necessary programs on your system if they are not in your PATH
-$blastall = "./blastall";
-$formatdb = "./formatdb";
-$python_script = "./BlastAlign.py";
+$blastall = "blastall";
+$formatdb = "formatdb";
+$python_script = "BlastAlign.py";
 # e.g. current Biolinux release at time of BlastAlign release
 #$blastall = "/usr/software/blast/blast-2.2.6-ia32/blastall"; 
 #$formatdb = "/usr/software/blast/blast-2.2.6-ia32/formatdb";
