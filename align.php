@@ -224,10 +224,12 @@
 			//echo "input is".$clustal_out_nexus." command file is ".$command_file."outfile is ".$paup_out."<br>";
 
 			exec("$PAUPpath $clustal_out_nexus < $command_file");
-			$pdfFile = getTreePDF($paup_out);
+			$pdfFile = getTreePDF($paup_out); # made pdf in /tpm and have copied it to rnavrusdb/tmp
+			$temp_array = preg_split("/tmp/", $pdfFile);
+			$new_pdf = "tmp".$temp_array[1];
 			echo '<br><br><h1>Click here to download phylogenetic tree of alignment as a pdf file</h1>
-			<a href="'.$myURL.$pdfFile.'"><input type="submit" value="Tree"/></a>';
-			#echo 'paup file is at'. $paup_out.'<br>';
+			<a href="'.$new_pdf.'"><input type="submit" value="Tree"/></a>';
+			#echo 'paup file is at '. $paup_out.' pointing browser to '.$new_pdf.'<br>';
 			echo '<br><br><h1>Click here to link to download phylogenetic tree of alignment using FigTree</h1>
 			<form action="figtree.php" method="GET"><input type="submit" value="FigTree"/><input type="hidden" name="FigTree" value="'.$paup_out.'"/></form>
 			';
@@ -302,7 +304,9 @@
  		file_put_contents($tgfFile, $tgf);
 		exec ("($TGF -p $tgfFile)");
   		exec ("($PS2PDF $epsFile $pdfFile)");
- 	 	exec ("(cp $pdfFile ".ABSPATH."tmp/)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
+ 	 	$copied_pdf = preg_replace('/\/\//','/', ABSPATH.$pdfFile); # We cannot point browser into /tmp so have to copy to a directory within rnavirusdb (ABSPATH gives path to it). 
+ 	 	exec ("(cp $pdfFile $copied_pdf)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
+  	 	#echo 'abspath is '. ABSPATH. ' pdf file is '.$pdfFile.'copied pdf is '.$copied_pdf.'<br>';
   	 	return $pdfFile;
     	}
 
