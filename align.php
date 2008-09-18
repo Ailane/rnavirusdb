@@ -206,7 +206,7 @@
 			$text = $text.fgets($filehandle);
 		}
 		fclose($filehandle);
-		echo '<br><br><h1>Click here to download alignment</h1>
+		echo '<br><br><h1>Click here to download alignment (FASTA format)</h1>
 		<form action="download.php" method="post"><input type="submit" value="Alignment"/><input type="hidden" name="align_query" value="'.$text.'"/></form>
 		';
 		$resource2 = mysql_query("SELECT count(*) FROM genomealigns WHERE segment_id=\"$segmentID\"",$db); # see if enough seqs for a tree
@@ -227,10 +227,10 @@
 			$pdfFile = getTreePDF($paup_out); # made pdf in /tpm and have copied it to rnavrusdb/tmp
 			$temp_array = preg_split("/tmp/", $pdfFile);
 			$new_pdf = "tmp".$temp_array[1];
-			echo '<br><br><h1>Click here to download phylogenetic tree of alignment as a pdf file</h1>
+			echo '<br><br><h1>Click here to download phylogenetic tree of alignment as a pdf file (only accession numbers shown)</h1>
 			<a href="'.$new_pdf.'"><input type="submit" value="Tree"/></a>';
 			#echo 'paup file is at '. $paup_out.' pointing browser to '.$new_pdf.'<br>';
-			echo '<br><br><h1>Click here to link to download phylogenetic tree of alignment using FigTree</h1>
+			echo '<br><br><h1>Click here to link to download phylogenetic tree of alignment using FigTree (isolate and strain also shown)</h1>
 			<form action="figtree.php" method="GET"><input type="submit" value="FigTree"/><input type="hidden" name="FigTree" value="'.$paup_out.'"/></form>
 			';
 		}
@@ -246,6 +246,44 @@
 		echo "</tr></table>";
 	}
 
+/*	
+	function expand_names2($paup_out) {
+		global $db;
+		$array = array();
+		$resource = mysql_query("SELECT acc, isolate, strain FROM isolates",$db);
+		if ($row = mysql_fetch_array($resource)) {
+			do {
+			#$line = $row["isolate"]."_".$row["strain"]."_acc_".$row["acc"];
+			$line = $row["strain"]."_acc_".$row["acc"];
+			#$line = "acc_".$row["acc"];
+			$pattern = "/\//";
+			$replacement = "_";
+			$line = preg_replace($pattern, $replacement, $line);
+			$pattern = "/ /";
+			$replacement = "_";
+			$line = preg_replace($pattern, $replacement, $line);
+			array_push($array, $line);
+			} while ($row = mysql_fetch_array($resource));
+		}
+		$contents = file_get_contents($paup_out);
+		#echo "<Br><br>starting contents are ".$contents."<br>";
+		$pattern = "/\d+ \w+,/";
+		preg_match_all($pattern, $contents, $matches); #remember, this creates a multidimensional array, so always need to used $matches[0][entry number]
+		foreach($matches[0] as $value) {
+			$pattern = "/\d+ (\w+),/";
+			$replacement = "$1";
+			$value = preg_replace($pattern, $replacement, $value);
+			$new_array = preg_grep("/$value/", $array);
+			$new_array = array_values($new_array);
+			#echo "new taxon name is ".$new_array[0]."<br>";
+			$contents = preg_replace("/$value/", "$new_array[0]", $contents);  # replacing corresponding full description for accession
+		}
+		#echo "<Br><br>final contents are ".$contents."<br>";
+		
+		file_put_contents($paup_out, $contents);
+		echo "paup is at ".$paup_out."<br>";
+	}
+*/
 	function get_segment_name($segmentID) {
 		global $db;
 		$resource = mysql_query("SELECT name FROM segments WHERE id=\"$segmentID\" ",$db);
