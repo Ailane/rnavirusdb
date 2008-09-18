@@ -22,6 +22,7 @@
 	$tree_ID = $_GET['FigTree'];
 
 	if ($tree_ID) {
+		expand_names($tree_ID);
 		getFigTree_query($tree_ID, $FIGTREEURL, $ABSPATH, $myURL);
 	}
 	else {
@@ -43,19 +44,46 @@
 	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
 	closeDocument();
 
+# functions
+	function expand_names($tree_ID) {
+		global $db;
+		$array = array();# this will hold full name description
+		$resource = mysql_query("SELECT acc, isolate, strain FROM isolates",$db);
+		if ($row = mysql_fetch_array($resource)) {
+			do {
+			$line = $row["isolate"]."-".$row["strain"]."-acc:".$row["acc"];
+			array_push($array, $line);
+			} while ($row = mysql_fetch_array($resource));
+		}
+		$contents = file_get_contents($tree_ID);
+		#echo "<Br><br>starting contents are ".$contents."<br>";
+		$pattern = "/\d+ \w+,/";
+		preg_match_all($pattern, $contents, $matches); #remember, this creates a multidimensional array called matches, so always need to used $matches[0][entry number]
+		foreach($matches[0] as $value) {
+			$pattern = "/\d+ (\w+),/";
+			$replacement = "$1";
+			$value = preg_replace($pattern, $replacement, $value);
+			$new_array = preg_grep("/$value/", $array);
+			$new_array = array_values($new_array);
+			#echo "old name is ".$value. " new taxon name is ".$new_array[0]."<br>";
+			if ($new_array[0]) {
+				$contents = preg_replace("/$value/", "\"$new_array[0]\"", $contents);  # replacing corresponding full description for accession
+			}
+		}
+		#echo "<Br><br>final contents are ".$contents."<br>";
+		#$contents = preg_replace("/UserQuery/", "UserQuery[&!color=\"red\"]", $contents); #'[&!color="red"] [&!color=#FF0000]
+		file_put_contents($tree_ID, $contents);
+	}
 
-// Tree construction
 	function getFigTree($segID, $FIGTREEURL, $ABSPATH, $myURL) {
 		global $db;
-
 		$treeName = $segID . ".tre";
-
 		$resource = mysql_query("SELECT tree FROM segments WHERE id=\"$segID\"",$db);	
 		$tree = mysql_result($resource, 0); // only one cell in field
 		if ($tree) { # tree will not be there if fewer than 3 aligned sequences
 			$tempfile = tempnam("/tmp", "arvore"); # use relative path to tmp folder
-			$treefile = $tempfile.".tre";
-			$handle = fopen($treefile, "w");
+			$tree_ID = $tempfile.".tre";
+			$handle = fopen($tree_ID, "w");
 			if ($handle) {
 				if (fwrite($handle, "$tree") == TRUE) {
 			}
@@ -66,11 +94,12 @@
 		else {
 			echo "<br>WebServer Error: no handle created for treefile<br>";
 		}
-   	 	exec ("(cp $treefile ".ABSPATH."tmp/$treeName)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
-   	 	unlink($treefile);
+		expand_names($tree_ID);
+   	 	exec ("(cp $tree_ID ".ABSPATH."tmp/$treeName)"); # cannot point browser into /tmp so have to copy to a dir within rnavirusdb (ABSPATH gives path to it)
+   	 	unlink($tree_ID);
 		unlink($tempfile);
 		$treeurl = $myURL."tmp/".$treeName;
-		echo '<br> tree name is:'.$treeurl.'<br>';
+		#echo '<br> tree name is:'.$treeurl.'<br>';
   		echo '<applet'
 		. ' code="figtree.applet.FigTreeApplet"'
 		. ' archive="' . $FIGTREEURL . '"'
