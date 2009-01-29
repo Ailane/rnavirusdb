@@ -32,9 +32,11 @@
 
 	echo '<br>The database currently has '. $number_viruses.
 	' viruses. Mirrors available at <a href="http://virus.zoo.ox.ac.uk/rnavirusdb/"><b>Oxford</b></a>, '.
-	'<a href="http://hivweb.sanbi.ac.za/rnavirusdb/"><b>Cape Town</b></a>, '.
+	'<a href="http://196.21.144.176/rnavirusdb/"><b>Durban</b></a>, '.
 	'<a href="http://bioinf.cs.auckland.ac.nz/rnavirusdb/"><b>Auckland</b></a>, and '.
 	'<a href="http://tree.bio.ed.ac.uk/rnavirusdb/"><b>Edinburgh</b></a>';
+
+	echo '<br><br> Until 16/02/2009 click <a href="http://www.findaphd.com/search/showproject.asp?projectid=16129"><b> here </b></a> for details of a D.Phil studentship on the evolution of Endogenous Retroviruses at Oxford<br>';	
 	
 	echo '<TABLE WIDTH="800px"><tbody><TR><TD><br><img src="images/logotree.png"
 style="width: 450px; height: 450px;" usemap="#logotree.png" border="0">&nbsp;
@@ -45,22 +47,23 @@ style="width: 450px; height: 450px;" usemap="#logotree.png" border="0">&nbsp;
                   <area shape="RECT" coords="340,231,402,278" href="viruslinks.php">
                   <area shape="RECT" coords="135,237,213,380" href="proteins.php"></TD>';
 	
-	echo '<TD><h2>The RNA Virus Homepage</h2><br>
-	
-	<a href="blast.php"><h1>BLAST</h1></a>
-	Identify your viral nucleotide or amino acid sequences<br><br>
+	echo '<TD><a href="blast.php"><h1>BLAST</h1></a>
+	Identify your virus sequences<br><br>
 
 	<a href="align.php"><h1>Align</h1></a>
 	Get whole genome alignments for each virus species and align your sequence to them<br><br>
 	
 	<a href="browse.php"><h1>Browse</h1></a>
-	To find information on all RNA viruses<br><br>
+	Find information on all RNA viruses<br><br>
 	
 	<a href="proteins.php"><h1>Proteins</h1></a>
-	Get amino acid sequences for viral genes and whole translated genomes for all viral species<br><br>
+	Get amino acid sequences for genes and complete translated genomes<br><br>
 	
 	<a href="viruslinks.php"><h1>Links</h1></a>
-	Links to other virus web sites
+	Links to other virus web sites<br><br>
+	
+	<a href="http://www.ncbi.nlm.nih.gov/pubmed/18948277"><h1>Citation</h1></a>
+	Description of site in <i>Nucleic Acids Res. </i><b>37</b>:D431-5
 	</TD></TR></tbody></TABLE>
 	';
 
