@@ -256,14 +256,14 @@
 
 	function select_by_function() {
 		echo '<h1>Find and download proteins from the database</CENTER></h1>';
-		echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">CAUTION: This page relies currently on a word search of GenBank entries; it has not been verified manually</table>';
+		echo '<br><TABLE BORDER="0" BGCOLOR ="#CCCCCC">CAUTION: This page relies currently on an automated word search of GenBank entries; it has not been verified manually</table>';
 
 		global $db;
 		$names = @mysql_query("SELECT id, name FROM viruses ORDER BY name ASC",$db);
 		$genera = @mysql_query("SELECT DISTINCT genus FROM viruses ORDER BY genus ASC",$db);
 		$families = @mysql_query("SELECT DISTINCT family FROM viruses ORDER BY family ASC",$db);
 		$types = @mysql_query("SELECT DISTINCT type FROM viruses ORDER BY type ASC",$db);
-		$functions = @mysql_query("SELECT id, name FROM proteinclassification",$db);
+		$functions = @mysql_query("SELECT id, name FROM proteinclassification ORDER BY name ASC",$db);
 		if (!$names or !$functions or !$genera or !$types or !$families) {
 			echo 'Unable to query database<br>';
 		}
@@ -323,7 +323,7 @@
 		}
 ?>
 		</select></label><br />
-		<br><br>Click Search to download  <input type="submit" value="Search" />
+		<br><br>Click here for results <input type="submit" value="Search" />
 		</form>
 <?php
 	}
