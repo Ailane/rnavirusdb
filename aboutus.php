@@ -25,19 +25,18 @@
 	draw_toolbar();
 	
 	echo'	<br><h1>Credits<br><br>The Zoology Department, University of Oxford, U.K.</h1>
-	Robert Belshaw<br>
-	Oliver Pybus<br><br>
+	<a href="http://evolve.zoo.ox.ac.uk/Evolve/Robert_Belshaw.html">Robert Belshaw</a><br>
+	<a href="http://evolve.zoo.ox.ac.uk/Evolve/Oliver_Pybus.html">Oliver Pybus</a><br><br>
 
 	<h1>Institute of Evolutionary Biology, University of Edinburgh, U.K.</h1>
-	Andrew Rambaut<br><br>
+	<a href="http://tree.bio.ed.ac.uk/people/arambaut/">Andrew Rambaut</a><br><br>
 	
-	<h1>MRC Pathogen Bioinformatics Unit, South African National Bioinformatics Institute,
-	Cape Town, South Africa. </h1>
+	<h1>Africa Centre for Health and Population Studies, University of KwaZulu-Natal, South Africa. </h1>
 	Tulio de Oliveira<br><br>
 	
 	<h1>Department of Computer Science, The University of Auckland, New Zealand. </h1>
 	Sidney Markowitz<br>
-	Alexei Drummond<br><br>
+	<a href="http://bioinf.cs.auckland.ac.nz/dr-alexei-drummond/">Alexei Drummond</a><br><br>
 	';
 
 	drawFooter("Robert Belshaw, Tulio de Oliveira, Sidney Markowitz & Andrew Rambaut"); 
