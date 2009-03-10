@@ -32,11 +32,9 @@
 
 	echo '<br>The database currently has '. $number_viruses.
 	' viruses. Mirrors available at <a href="http://virus.zoo.ox.ac.uk/rnavirusdb/"><b>Oxford</b></a>, '.
-	'<a href="http://196.21.144.176/rnavirusdb/"><b>Durban</b></a>, '.
+	'<a href="http://newbioafrica.mrc.ac.za/rnavirusdb/"><b>Durban</b></a>, '.
 	'<a href="http://bioinf.cs.auckland.ac.nz/rnavirusdb/"><b>Auckland</b></a>, and '.
 	'<a href="http://tree.bio.ed.ac.uk/rnavirusdb/"><b>Edinburgh</b></a>';
-
-	echo '<br><br> Until 16/02/2009 click <a href="http://www.findaphd.com/search/showproject.asp?projectid=16129"><b> here </b></a> for details of a D.Phil studentship on the evolution of Endogenous Retroviruses at Oxford<br>';	
 	
 	echo '<TABLE WIDTH="800px"><tbody><TR><TD><br><img src="images/logotree.png"
 style="width: 450px; height: 450px;" usemap="#logotree.png" border="0">&nbsp;
